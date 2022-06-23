@@ -6,9 +6,9 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     - yocto
   variables:
     GIT_STRATEGY: none
-    POKY_REV: bba323389749ec3e306509f8fb12649f031be152
-    OPENEMBEDDED_REV: ec978232732edbdd875ac367b5a9c04b881f2e19
-    GPLV2_REV: 60b251c25ba87e946a0ca4cdc8d17b1cb09292ac
+    POKY_REV: 453be4d258f71855205f45599eea04589eb4a369
+    OPENEMBEDDED_REV: 166ef8dbb14ad98b2094a77fcf352f6c63d5abf2
+    GPLV2_REV: d2f8b5cdb285b72a4ed93450f6703ca27aa42e8a
     CONF_DIR: meta-renesas/docs/template/conf/${PLATFORM}
     DL_DIR: ${CI_PROJECT_DIR}/downloads
     SSTATE_DIR: ${CI_PROJECT_DIR}/sstate_cache
@@ -18,7 +18,7 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     - mkdir build && cd build
   script:
     - git clone https://git.yoctoproject.org/git/poky
-    - cd poky && git checkout ${POKY_REV} && git cherry-pick 9e444 cfd897e21 && cd -
+    - cd poky && git checkout ${POKY_REV} && cd -
     - git clone https://github.com/openembedded/meta-openembedded
     - cd meta-openembedded && git checkout ${OPENEMBEDDED_REV}  && cd -
     - git clone https://git.yoctoproject.org/git/meta-gplv2
