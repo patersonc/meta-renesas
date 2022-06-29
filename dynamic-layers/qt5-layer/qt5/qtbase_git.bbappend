@@ -9,8 +9,8 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:" 
- 
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+
 SRC_URI:append = " \
     file://0001-Fix-division-by-zero-in-radial-gradiants-with-NEON.patch \
     file://0002-Make-tst_QOpenGLWindow-pass-on-platforms-where-the-d.patch \
