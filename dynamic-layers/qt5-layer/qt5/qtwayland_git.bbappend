@@ -21,7 +21,7 @@ RDEPENDS:${PN} += "${DEP}"
 RDEPENDS:${PN}-plugins += "${DEP}"
 RDEPENDS:${PN}-examples += "${DEP}"
 
-DEPENDS:append_rzg2 = " mesa"
+DEPENDS:append:rzg2 = " mesa"
 DEPENDS:remove = " xproto"
 
 

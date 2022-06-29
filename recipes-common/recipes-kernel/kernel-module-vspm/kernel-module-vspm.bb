@@ -19,7 +19,7 @@ SRCREV = "07787fc1168e7fe37c305aca151a6f756f35874f"
 
 SRC_URI = "${VSPM_DRV_URL};branch=${BRANCH}"
 
-SRC_URI:append_rzg2l = " \
+SRC_URI:append:rzg2l = " \
         file://0001-Add-ISU-driver.patch \
         file://0002-Add-option-ISU_CSC_RAW.patch \
         file://0003-Add-ISU-to-VSPM.patch \
@@ -71,7 +71,7 @@ do_install () {
     install -m 644 ${S}/${VSPM_DRV_DIR}/include/fdp_drv.h ${D}/${includedir}/
 }
 
-do_install:append_rzg2l () {
+do_install:append:rzg2l () {
     install -m 644 ${S}/${VSPM_DRV_DIR}/include/isu_drv.h ${KERNELSRC}/include/
     install -m 644 ${S}/${VSPM_DRV_DIR}/include/isu_drv.h ${D}/${includedir}/
 }

@@ -10,7 +10,7 @@ SRC_URI:append = " \
     ${@oe.utils.conditional("RZG2H_SECURITY_FEATURE", "ENABLE", "file://0003-Fix-Provisioning-function-for-SECURE-BOOT.patch", "",d)} \
 "
 
-EXTRA_OEMAKE:append += " \
+EXTRA_OEMAKE:append = " \
     ${@oe.utils.conditional("RZG2H_SECURITY_FEATURE", "ENABLE", "SEC_PRV=ENABLE SEC_PRV_KEY_ENC=${SEC_PRV_KEY_ENC}", "",d)} \
 "
 

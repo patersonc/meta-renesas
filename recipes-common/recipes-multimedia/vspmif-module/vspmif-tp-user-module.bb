@@ -13,12 +13,12 @@ VSPMIF_TP_DIR = "vspm_if-tp-user/files/vspm_if"
 WS:aarch64 = ""
 WS:virtclass-multilib-lib32 = "32"
 
-SRC_URI:append_rzg2l = " \
+SRC_URI:append:rzg2l = " \
         file://0001-Add-ISU-One-pass-test.patch \
 	file://0002-add-ISU-IT.patch \
 "
 
-do_compile:prepend_rzg2l() {
+do_compile:prepend:rzg2l() {
     if [ X${WS} = "X32" ]; then
        cp ${STAGING_KERNEL_DIR}/include/vsp_drv.h ${RECIPE_SYSROOT}/usr/local/include
        cp ${STAGING_KERNEL_DIR}/include/isu_drv.h ${RECIPE_SYSROOT}/usr/local/include
@@ -47,7 +47,7 @@ do_install() {
     fi
 }
 
-do_install:append_rzg2l() {
+do_install:append:rzg2l() {
     if [ X${WS} = "X32" ]; then
         install -m 755 ${S}/${VSPMIF_TP_DIR}/vspm_isu_rs ${D}${RENESAS_DATADIR}/bin/isum_tp32
     else

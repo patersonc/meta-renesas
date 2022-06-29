@@ -5,7 +5,7 @@ DEPENDS:append = " \
 	${@oe.utils.conditional("TRUSTED_BOARD_BOOT", "1", "python3-pycryptodome-native python3-pycryptodomex-native secprv-native bootparameter-native", "",d)} \
 "
 
-SRC_URI:append += " \
+SRC_URI:append = " \
 	${@oe.utils.conditional("TRUSTED_BOARD_BOOT", "1", "file://0001-flash-writer-supports-secure-boot.patch", "",d)} \
 "
 

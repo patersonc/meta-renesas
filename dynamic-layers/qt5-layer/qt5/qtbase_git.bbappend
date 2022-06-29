@@ -39,7 +39,7 @@ PACKAGECONFIG:append = " sql-sqlite sql-sqlite2 openssl icu accessibility exampl
 CONF_ADD_X11 = "${@bb.utils.contains('DISTRO_FEATURES', 'x11', ' -qpa xcb -xcb -xcb-xlib -system-xcb -eglfs', '', d)}"
 CONF_ADD_WAYLAND = "${@bb.utils.contains('DISTRO_FEATURES', 'wayland', ' -qpa wayland -no-xcb -wayland', '', d)}"
 
-PACKAGECONFIG_CONFARGS:append += "\
+PACKAGECONFIG_CONFARGS:append = "\
 	-no-kms \
 	-no-gbm \
 	-no-pulseaudio \
@@ -53,7 +53,7 @@ PACKAGECONFIG_CONFARGS:append += "\
 "
 
 # add necessary packages
-PACKAGECONFIG:append += " sm linuxfb gles2"
+PACKAGECONFIG:append = " sm linuxfb gles2"
 
 # nis option is not supported anymore, disable it here
 PACKAGECONFIG[nis] = ""

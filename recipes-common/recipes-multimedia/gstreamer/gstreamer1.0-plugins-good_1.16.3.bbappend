@@ -15,6 +15,6 @@ EXTRA_OEMESON:append = " \
     -Dignore-fps-of-video-standard=true \
 "
 
-EXTRA_OEMESON:append_rzg2h = " \
+EXTRA_OEMESON:append:rzg2h = " \
      -Dcont-frame-capture=true \
 "

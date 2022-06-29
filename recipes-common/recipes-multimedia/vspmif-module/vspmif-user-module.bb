@@ -16,14 +16,14 @@ includedir = "${RENESAS_DATADIR}/include"
 WS:aarch64 = ""
 WS:virtclass-multilib-lib32 = "32"
 
-SRC_URI:append_rzg2l = " \
+SRC_URI:append:rzg2l = " \
 	file://0001-Modify-vspm_public.h-for-ISUM.patch \
 	file://0002-Modify-Makefile-for-building-vspm_api_isu.patch \
 	file://0003-Add-vspm_api_isu.c-for-ISUM.patch \
 	file://0004-Support-libvspm-32bit.patch \
 "
 
-do_compile:prepend_rzg2l() {
+do_compile:prepend:rzg2l() {
     if [ X${WS} = "X32" ]; then
         export VSPM32="1"
     fi

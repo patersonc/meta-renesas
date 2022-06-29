@@ -20,7 +20,7 @@ SRCREV = "2fdb2838a5625e4231f1cff5d10079acc4954952"
 
 SRC_URI = "${VSPMIF_DRV_URL};branch=${BRANCH}"
 
-SRC_URI:append_rzg2l = " \
+SRC_URI:append:rzg2l = " \
 	file://0001-Add-ISU-to-vspmif.patch \
 	file://0002-Remove-width-height-in-isu_dst_t.patch \
 	file://0003-Correcting-variable-type.patch \

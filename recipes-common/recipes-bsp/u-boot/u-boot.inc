@@ -203,7 +203,7 @@ do_install () {
 
 FILES:${PN} = "/boot ${sysconfdir}"
 
-SYSROOT_DIRS_rzg2l += "/boot"
+SYSROOT_DIRS:rzg2l += "/boot"
 
 do_deploy () {
     if [ -n "${UBOOT_CONFIG}" ]

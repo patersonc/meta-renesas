@@ -32,7 +32,7 @@ IMAGE_INSTALL:append = " \
 "
 
 # Installation for Wifi/Bluetooth packages
-IMAGE_INSTALL:append_rzg2h = " \
+IMAGE_INSTALL:append:rzg2h = " \
     watchdog \
     linux-firmware-ti-connectivity-license \
     linux-firmware-wl18xx \

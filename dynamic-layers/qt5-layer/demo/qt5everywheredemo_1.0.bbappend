@@ -2,11 +2,11 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 LIC_FILES_CHKSUM = "file://main.cpp;md5=9ee38907470e8eaf4219d06a739e6a78"
 SRCREV = "35d72a2eba7456a2efc5eb8b77afbc00f69ba0ac"
-DEPENDS:append += "qtmultimedia qtsvg"
+DEPENDS:append = " qtmultimedia qtsvg"
 
 RDEPENDS:${PN}:append = " qtdemo-extrafiles qtquickcontrols"
 
-SRC_URI:append += " \
+SRC_URI:append = " \
 	file://0001-Run-application-fullscreen-and-add-exit-button.patch \
 	file://0002-Configure-font-for-application-and-rendertype-for-to.patch \
 	file://0003-Force-complete-loading-incubator-if-it-not-ready.patch \

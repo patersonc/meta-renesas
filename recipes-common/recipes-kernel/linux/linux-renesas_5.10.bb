@@ -4,8 +4,8 @@ require recipes-kernel/linux/linux-yocto.inc
 require include/docker-control.inc
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/:"
-COMPATIBLE_MACHINE_rzg2l = "(smarc-rzg2l|smarc-rzg2lc|smarc-rzg2ul)"
-COMPATIBLE_MACHINE_rzg2h = "(ek874|hihope-rzg2n|hihope-rzg2m|hihope-rzg2h)"
+COMPATIBLE_MACHINE:rzg2l = "(smarc-rzg2l|smarc-rzg2lc|smarc-rzg2ul)"
+COMPATIBLE_MACHINE:rzg2h = "(ek874|hihope-rzg2n|hihope-rzg2m|hihope-rzg2h)"
 
 KERNEL_URL = " \
     git://github.com/renesas-rz/rz_linux-cip.git;branch=master;protocol=https"

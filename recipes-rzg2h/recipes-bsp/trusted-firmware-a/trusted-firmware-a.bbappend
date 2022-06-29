@@ -1,6 +1,6 @@
 require include/rzg2h-security-config.inc
 
-SRC_URI:append += " \
+SRC_URI:append = " \
     ${@oe.utils.conditional("RZG2H_SECURITY_FEATURE", "ENABLE", "file://0001-plat-rzg-add-support-SECURE-BOOT-for-RZ-G2-Platform.patch", "",d)} \
     ${@oe.utils.conditional("RZG2H_SECURITY_FEATURE", "ENABLE", "file://0002-plat-rzg-add-the-security-tools-for-SECURE-BOOT.patch", "",d)} \
     ${@oe.utils.conditional("RZG2H_SECURITY_FEATURE", "ENABLE", "file://0003-renesas-rpc-add-read-extern-mode-function.patch", "",d)} \
@@ -8,7 +8,7 @@ SRC_URI:append += " \
     ${@oe.utils.conditional("RZG2H_SECURITY_FEATURE", "ENABLE", "file://0005-tools-rzg-change-Security-Module-address-in-boot-dev.patch", "",d)} \
 "
 
-ATFW_OPT:append += " \
+ATFW_OPT:append = " \
     ${@oe.utils.conditional("RZG2H_SECURITY_FEATURE", "ENABLE", "RCAR_SECURE_BOOT=1", "",d)} \
 "
 

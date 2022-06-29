@@ -10,11 +10,11 @@ SRC_URI = " \
 	file://COPYING.MIT \
 "
 
-SRC_URI:append_rzg2l = " \
+SRC_URI:append:rzg2l = " \
 	file://v4l2-init-rzg2l.sh \
 "
 
-SRC_URI:append_rzg2h = " \
+SRC_URI:append:rzg2h = " \
 	file://v4l2-init-rzg2hmne.sh \
 "
 

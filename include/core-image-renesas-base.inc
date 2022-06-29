@@ -76,7 +76,7 @@ IMAGE_INSTALL:append = " \
     optee-client \
 "
 
-BASIC_32BIT_PKGS:append_rzg2h = " \
+BASIC_32BIT_PKGS:append:rzg2h = " \
     lib32-optee-client \
 "
 
@@ -93,7 +93,7 @@ QOS_USER_PKGS:aarch64-poky-linux = " \
 "
 
 # Installation for QoS packages
-IMAGE_INSTALL:append_rzg2h = " \
+IMAGE_INSTALL:append:rzg2h = " \
     kernel-module-qos \
     ${QOS_USER_PKGS} \
 "
