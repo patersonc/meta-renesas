@@ -168,10 +168,6 @@ It is possible to change some build configs as below:
   ```
   #INCOMPATIBLE_LICENSE = "GPL-3.0-only GPL-3.0-or-later"
   ```
-* CIP Core: choose the version of CIP Core to build with. CIP Core are software packages that are maintained for long term by CIP community. You can select the value "1" or "0" for CIP_CORE variable
-  ```
-  CIP_CORE = "1"
-  ```
 * QT Demo: choose QT5 Demonstration to build with core-image-qt. QT5 Demos are some applications to demonstrate QT5 framework.
   * Unset QT_DEMO (default): all QT5 Demos are not built with core-image-qt.
   ```
