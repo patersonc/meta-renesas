@@ -5,10 +5,10 @@ SUMMARY = "General purpose cryptographic library based on the code from GnuPG"
 HOMEPAGE = "http://directory.fsf.org/project/libgcrypt/"
 
 # helper program gcryptrnd and getrandom are under GPL, rest LGPL
-LICENSE = "GPLv2+ & LGPLv2.1+ & GPLv3+"
-LICENSE:${PN} = "LGPLv2.1+"
-LICENSE:${PN}-dev = "GPLv2+ & LGPLv2.1+"
-LICENSE:dumpsexp-dev = "GPLv3+"
+LICENSE = "GPL-2.0-or-later & LGPL-2.1-or-later & GPL-3.0-or-later"
+LICENSE:${PN} = "LGPL-2.1-or-later"
+LICENSE:${PN}-dev = "GPL-2.0-or-later & LGPL-2.1-or-later"
+LICENSE:dumpsexp-dev = "GPL-3.0-or-later"
 
 LIC_FILES_CHKSUM = " \
     file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f \

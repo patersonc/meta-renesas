@@ -6,7 +6,7 @@
 SUMMARY = "Cross locale generation tool for glibc"
 HOMEPAGE = "http://www.gnu.org/software/libc/libc.html"
 
-LICENSE = "LGPLv2.1"
+LICENSE = "LGPL-2.1-only"
 LIC_FILES_CHKSUM = " \
 file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263 \
 file://COPYING.LIB;md5=4fbd65380cdd255951079008b364516c \

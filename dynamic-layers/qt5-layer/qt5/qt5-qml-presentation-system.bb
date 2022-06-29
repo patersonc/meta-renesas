@@ -1,7 +1,7 @@
 SUMMARY = "Qt5 qml presentation system"
 DESCRIPTION = "Quick tour of Qt 5.0, primarily focusing on its graphical capabilities."
 HOMEPAGE = "https://code.qt.io/cgit/qt-labs/"
-LICENSE = "LGPLv2.1"
+LICENSE = "LGPL-2.1-only"
 
 # This package actually has no License file. Below is dummy info to build
 LIC_FILES_CHKSUM = "file://presentation.pro;md5=fcb836475bffdd2776009a329c13b560"

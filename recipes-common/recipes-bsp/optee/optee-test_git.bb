@@ -3,7 +3,7 @@ SUMMARY = "OP-TEE sanity testsuite"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 inherit deploy python3native
 
-LICENSE = "BSD & GPLv2"
+LICENSE = "BSD & GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://${S}/LICENSE.md;md5=daa2bcccc666345ab8940aab1315a4fa"
 
 #TAG: 3.15.0

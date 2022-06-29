@@ -11,7 +11,7 @@ inherit debian-package
 require recipes-common/recipes-debian/sources/kbd.inc
 
 # everything minus console-fonts is GPLv2+
-LICENSE = "GPLv2+"
+LICENSE = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://COPYING;md5=a5fcc36121d93e1f69d96a313078c8b5"
 
 FILESPATH:append = ":${COREBASE}/meta/recipes-core/kbd/kbd:${THISDIR}/kbd"

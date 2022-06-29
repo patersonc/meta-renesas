@@ -1,7 +1,7 @@
 SUMMARY = "GNU Privacy Guard - encryption and signing tools (2.x)"
 HOMEPAGE = "https://www.gnupg.org/"
 
-LICENSE = "GPLv3+ & LGPLv3+ & LGPLv2.1+ & MIT & BSD & CC0-1.0"
+LICENSE = "GPL-3.0-or-later & LGPL-3.0-or-later & LGPL-2.1-or-later & MIT & BSD & CC0-1.0"
 LIC_FILES_CHKSUM = " \
     file://COPYING;md5=189af8afca6d6075ba6c9e0aa8077626 \
     file://COPYING.LGPL3;md5=a2b6bf2cb38ee52619e60f30a1fc7257 \
