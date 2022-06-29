@@ -13,7 +13,7 @@ DEPENDS = "linux-renesas"
 PN = "kernel-module-vspm"
 PR = "r0"
 
-VSPM_DRV_URL = "git://github.com/renesas-rcar/vspm_drv.git"
+VSPM_DRV_URL = "git://github.com/renesas-rcar/vspm_drv.git;branch=master;protocol=https"
 BRANCH = "rcar_gen3"
 SRCREV = "07787fc1168e7fe37c305aca151a6f756f35874f"
 

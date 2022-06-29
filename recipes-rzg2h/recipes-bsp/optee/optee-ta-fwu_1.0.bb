@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://${S}/LICENSE.md;md5=6dfbd335e1a8e28d20df79f57587cabc"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 PN = "optee-ta-fwu"
 
-OPTEE_TA_FWU_URL = "git://github.com/renesas-rz/rzg_optee-ta_fwu.git"
+OPTEE_TA_FWU_URL = "git://github.com/renesas-rz/rzg_optee-ta_fwu.git;branch=master;protocol=https"
 BRANCH = "main"
 
 SRC_URI = "${OPTEE_TA_FWU_URL};branch=${BRANCH};protocol=https" 

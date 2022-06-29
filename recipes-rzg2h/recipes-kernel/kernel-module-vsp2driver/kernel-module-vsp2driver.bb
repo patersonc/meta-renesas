@@ -13,7 +13,7 @@ PN = "kernel-module-vsp2driver"
 PR = "r0"
 
 VSP2DRIVER_URL = " \
-    git://github.com/renesas-rcar/vsp2driver.git"
+    git://github.com/renesas-rcar/vsp2driver.git;branch=master;protocol=https"
 BRANCH = "rcar-gen3"
 SRCREV = "b3a116d8ce68371cac21011ca3b3190ae3576987"
 

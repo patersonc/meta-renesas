@@ -16,7 +16,7 @@ SRCREV_rzg2l = "f2eb88affbb7f028561b4fd5cbd049d5d704f741"
 BRANCH = "master"
 
 SRC_URI = " \
-	git://github.com/OP-TEE/optee_test.git;branch=${BRANCH} \
+	git://github.com/OP-TEE/optee_test.git;branch=${BRANCH};protocol=https \
 "
 
 DEPENDS = "optee-os optee-client"

@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = " \
 inherit module
 require include/rzg2-modules-common.inc
 
-MMNGR_DRV_URI = "git://github.com/renesas-rcar/mmngr_drv.git"
+MMNGR_DRV_URI = "git://github.com/renesas-rcar/mmngr_drv.git;branch=master;protocol=https"
 
 SRC_URI = "${MMNGR_DRV_URI};branch=rcar_gen3"
 SRCREV = "2439802426474136312bd10bc4c143fbf1c84850"

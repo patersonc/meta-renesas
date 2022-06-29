@@ -4,7 +4,7 @@ LIC_FILES_CHKSUM = "file://${S}/LICENSE;md5=f0ee3f2f59c4b4f33c4876647af7eb9f"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-NS_BL2U_URL = "git://github.com/renesas-rz/rzg_tf-a_ns-bl2u.git"
+NS_BL2U_URL = "git://github.com/renesas-rz/rzg_tf-a_ns-bl2u.git;branch=master;protocol=https"
 BRANCH = "main"
 
 SRC_URI = "${NS_BL2U_URL};branch=${BRANCH};protocol=https"

@@ -16,7 +16,7 @@ BRANCH = "3.14.0/rzg2l"
 SRCREV = "800c771a1c9e4de38d48ab5a3e854ad1aaff6433"
 
 SRC_URI = " \
-	git://github.com/renesas-rz/rzg_optee-os.git;branch=${BRANCH} \
+	git://github.com/renesas-rz/rzg_optee-os.git;branch=${BRANCH};protocol=https \
 "
 
 COMPATIBLE_MACHINE = "(smarc-rzg2l|smarc-rzg2lc)"

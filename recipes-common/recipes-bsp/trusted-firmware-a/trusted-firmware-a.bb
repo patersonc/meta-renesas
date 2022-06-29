@@ -17,7 +17,7 @@ BRANCH_mbedtls = "mbedtls-2.16"
 
 SRC_URI = " \
 	git://github.com/renesas-rz/rzg_trusted-firmware-a.git;branch=${BRANCH};protocol=https \
-	git://github.com/ARMmbed/mbedtls.git;branch=${BRANCH_mbedtls};name=mbedtls;destsuffix=mbedtls \
+	git://github.com/ARMmbed/mbedtls.git;branch=${BRANCH_mbedtls};name=mbedtls;destsuffix=mbedtls;protocol=https \
 "
 
 SRCREV = "aed3786384b99dc13a46a8d3af139df28b5642a3"

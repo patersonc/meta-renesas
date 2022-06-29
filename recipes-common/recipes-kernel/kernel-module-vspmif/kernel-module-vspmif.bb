@@ -14,7 +14,7 @@ PN = "kernel-module-vspmif"
 PR = "r0"
 
 VSPMIF_DRV_URL = " \
-    git://github.com/renesas-rcar/vspmif_drv.git"
+    git://github.com/renesas-rcar/vspmif_drv.git;branch=master;protocol=https"
 BRANCH = "rcar_gen3"
 SRCREV = "2fdb2838a5625e4231f1cff5d10079acc4954952"
 

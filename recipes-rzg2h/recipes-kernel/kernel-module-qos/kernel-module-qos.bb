@@ -15,7 +15,7 @@ DEPENDS = "linux-renesas"
 PN = "kernel-module-qos"
 PR = "r0"
 
-QOS_DRV_URL = "git://github.com/renesas-rcar/qos_drv.git"
+QOS_DRV_URL = "git://github.com/renesas-rcar/qos_drv.git;branch=master;protocol=https"
 BRANCH = "rcar-gen3"
 SRCREV = "90981d2aa1730589fa87b50f07d9feec09396b9b"
 

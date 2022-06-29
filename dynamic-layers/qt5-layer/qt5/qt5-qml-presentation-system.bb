@@ -10,7 +10,7 @@ DEPENDS = "qtdeclarative"
 #RDEPENDS:${PN}-dev = ""
 
 SRCREV = "860804a58bf47eaecdcc1acf81620bb998bf8cbf"
-SRC_URI = "git://code.qt.io/qt-labs/qml-presentation-system.git"
+SRC_URI = "git://code.qt.io/qt-labs/qml-presentation-system.git;branch=master"
 
 S = "${WORKDIR}/git"
 

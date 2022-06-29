@@ -14,7 +14,7 @@ BRANCH = "master"
 SRCREV = "6be0dbcaa11394a2ad5a46ac77e2f76e31a41722"
 
 SRC_URI = " \
-    git://github.com/OP-TEE/optee_os.git;branch=${BRANCH} \
+    git://github.com/OP-TEE/optee_os.git;branch=${BRANCH};protocol=https \
     file://0001-mk-gcc-allow-setting-sysroot-lookup.patch \
     file://0002-arch-plat-rzg-add-HW-Unique-Key-support-for-TEE-OTP.patch \
     file://0003-core-arm-plat-rzg-Add-ECC-mode-checking-for-shared-m.patch \
