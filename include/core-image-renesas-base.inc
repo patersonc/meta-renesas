@@ -3,12 +3,12 @@ require docker-control.inc
 # Additional tools for supporting Docker
 DOCKER_PKGS = " docker ca-certificates ntpdate kernel-module-nf-conntrack-netlink "
 
-IMAGE_INSTALL_append = "\
+IMAGE_INSTALL:append = "\
   ${@oe.utils.conditional("USE_DOCKER", "1", " ${DOCKER_PKGS} ", "", d)} \
 "
 
 # Basic packages
-IMAGE_INSTALL_append = " \
+IMAGE_INSTALL:append = " \
     bash \
     v4l-utils \
     v4l2-init \
@@ -18,8 +18,8 @@ IMAGE_INSTALL_append = " \
     packagegroup-multimedia-kernel-modules \
 "
 
-IMAGE_FEATURES_remove = " ssh-server-dropbear"
-IMAGE_FEATURES_append = " ssh-server-openssh"
+IMAGE_FEATURES:remove = " ssh-server-dropbear"
+IMAGE_FEATURES:append = " ssh-server-openssh"
 
 update_issue() {
     # Set BSP version
@@ -72,28 +72,28 @@ BASIC_32BIT_PKGS = " \
 "
 
 # Support secure environment
-IMAGE_INSTALL_append = " \
+IMAGE_INSTALL:append = " \
     optee-client \
 "
 
-BASIC_32BIT_PKGS_append_rzg2h = " \
+BASIC_32BIT_PKGS:append_rzg2h = " \
     lib32-optee-client \
 "
 
 # Installation for 32bit packages
-IMAGE_INSTALL_append = " \
+IMAGE_INSTALL:append = " \
     ${@oe.utils.conditional("USE_32BIT_PKGS", "1", "${BASIC_32BIT_PKGS}", "", d)} \
 "
 
 # Qos user packages only supports 64bit.
 QOS_USER_PKGS = ""
-QOS_USER_PKGS_aarch64-poky-linux = " \
+QOS_USER_PKGS:aarch64-poky-linux = " \
     qosif-user-module \
     qosif-tp-user-module \
 "
 
 # Installation for QoS packages
-IMAGE_INSTALL_append_rzg2h = " \
+IMAGE_INSTALL:append_rzg2h = " \
     kernel-module-qos \
     ${QOS_USER_PKGS} \
 "

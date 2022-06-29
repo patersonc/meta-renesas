@@ -1,6 +1,6 @@
 DESCRIPTION = "QoS driver for the RZG2"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}/:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}/:"
 
 LICENSE = "GPLv2 & MIT"
 LIC_FILES_CHKSUM = " \
@@ -58,6 +58,6 @@ PACKAGES = " \
     ${PN}-dbg \
 "
 
-FILES_${PN} = " \
+FILES:${PN} = " \
     /lib/modules/${KERNEL_VERSION}/extra/qos.ko \
 "

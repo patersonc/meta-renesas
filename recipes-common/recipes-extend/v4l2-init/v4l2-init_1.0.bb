@@ -3,24 +3,24 @@ inherit systemd
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
 SYSTEMD_AUTO_ENABLE = "enable"
-SYSTEMD_SERVICE_${PN} = "v4l2-init.service"
+SYSTEMD_SERVICE:${PN} = "v4l2-init.service"
 
 SRC_URI = " \
 	file://v4l2-init.service \
 	file://COPYING.MIT \
 "
 
-SRC_URI_append_rzg2l = " \
+SRC_URI:append_rzg2l = " \
 	file://v4l2-init-rzg2l.sh \
 "
 
-SRC_URI_append_rzg2h = " \
+SRC_URI:append_rzg2h = " \
 	file://v4l2-init-rzg2hmne.sh \
 "
 
 S = "${WORKDIR}"
 
-FILES_${PN} += " \
+FILES:${PN} += " \
 	${systemd_unitdir}/system/v4l2-init.service \
 	/home/root/v4l2-init.sh \
 "

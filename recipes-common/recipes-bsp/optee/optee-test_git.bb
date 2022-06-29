@@ -25,7 +25,7 @@ DEPENDS += "python3-pyelftools-native python3-pycryptodome-native python3-pycryp
 OPTEE_CLIENT_EXPORT = "${STAGING_DIR_HOST}${prefix}"
 TA_DEV_KIT_DIR = "${STAGING_INCDIR}/optee/export-user_ta/"
 
-CFLAGS_prepend = "--sysroot=${STAGING_DIR_HOST}"
+CFLAGS:prepend = "--sysroot=${STAGING_DIR_HOST}"
 
 EXTRA_OEMAKE = " \
 	TA_DEV_KIT_DIR=${TA_DEV_KIT_DIR} \

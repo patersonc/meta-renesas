@@ -20,7 +20,7 @@ SRCREV = "2fdb2838a5625e4231f1cff5d10079acc4954952"
 
 SRC_URI = "${VSPMIF_DRV_URL};branch=${BRANCH}"
 
-SRC_URI_append_rzg2l = " \
+SRC_URI:append_rzg2l = " \
 	file://0001-Add-ISU-to-vspmif.patch \
 	file://0002-Remove-width-height-in-isu_dst_t.patch \
 	file://0003-Correcting-variable-type.patch \
@@ -66,11 +66,11 @@ PACKAGES = "\
     ${PN}-dev \
 "
 
-FILES_${PN} = " \
+FILES:${PN} = " \
     /lib/modules/${KERNEL_VERSION}/extra/vspm_if.ko \
     /etc/modules-load.d/vspm_if.conf \
 "
 
-RPROVIDES_${PN} += "kernel-module-vspmif kernel-module-vspm-if"
+RPROVIDES:${PN} += "kernel-module-vspmif kernel-module-vspm-if"
 
 KERNEL_MODULE_AUTOLOAD = "vspm_if vspmif"

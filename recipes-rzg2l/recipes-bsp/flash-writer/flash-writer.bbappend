@@ -1,15 +1,15 @@
 require include/rzg2l-security-config.inc
 inherit python3native
 
-DEPENDS_append = " \
+DEPENDS:append = " \
 	${@oe.utils.conditional("TRUSTED_BOARD_BOOT", "1", "python3-pycryptodome-native python3-pycryptodomex-native secprv-native bootparameter-native", "",d)} \
 "
 
-SRC_URI_append += " \
+SRC_URI:append += " \
 	${@oe.utils.conditional("TRUSTED_BOARD_BOOT", "1", "file://0001-flash-writer-supports-secure-boot.patch", "",d)} \
 "
 
-do_compile_append() {
+do_compile:append() {
 	if [ "${TRUSTED_BOARD_BOOT}" = "1" ]; then
 		oe_runmake BOARD=${BOARD} TRUSTED_BOARD_BOOT=ENABLE
 
@@ -61,7 +61,7 @@ do_compile_append() {
 	fi
 }
 
-do_deploy_append() {
+do_deploy:append() {
 	if [ "${TRUSTED_BOARD_BOOT}" = "1" ]; then
 		install -m 644 ${S}/AArch64_output/tbb/*.mot ${DEPLOYDIR}
 		if [ "${PMIC_SUPPORT}" = "1" ]; then

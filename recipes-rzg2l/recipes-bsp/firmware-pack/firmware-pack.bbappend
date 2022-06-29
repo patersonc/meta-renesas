@@ -1,11 +1,11 @@
 require include/rzg2l-security-config.inc
 
-DEPENDS_append = " \
+DEPENDS:append = " \
 	${@oe.utils.conditional("ENABLE_SPD_OPTEE", "1", " optee-os", "",d)} \
 	${@oe.utils.conditional("TRUSTED_BOARD_BOOT", "1", " secprv-native", "",d)} \
 "
 
-do_compile_append () {
+do_compile:append () {
 
 	if [ "${ENABLE_SPD_OPTEE}" = "1" ]; then
 		fiptool update --align 16 --tos-fw ${STAGING_DIR_HOST}/boot/tee-${MACHINE}.bin fip.bin
@@ -60,7 +60,7 @@ do_compile_append () {
 	fi
 }
 
-do_deploy_append () {
+do_deploy:append () {
 
 	if [ "${TRUSTED_BOARD_BOOT}" = "1" ]; then
 		# Copy fip trusted boot board images

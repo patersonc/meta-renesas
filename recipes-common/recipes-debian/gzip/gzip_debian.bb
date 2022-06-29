@@ -9,12 +9,12 @@ LIC_FILES_CHKSUM = " \
 	file://gzip.h;beginline=8;endline=20;md5=6e47caaa630e0c8bf9f1bc8d94a8ed0e \
 "
 
-FILESPATH_append = ":${COREBASE}/meta/recipes-extended/gzip/gzip-1.9:${COREBASE}/meta/recipes-extended/gzip/files"
+FILESPATH:append = ":${COREBASE}/meta/recipes-extended/gzip/gzip-1.9:${COREBASE}/meta/recipes-extended/gzip/files"
 SRC_URI += " \
     file://run-ptest \
 "
 
-PROVIDES_append_class-native = " gzip-replacement-native"
+PROVIDES:append:class-native = " gzip-replacement-native"
 
 BBCLASSEXTEND = "native"
 

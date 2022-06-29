@@ -1,16 +1,16 @@
 require include/rzg2l-security-config.inc
 inherit python3native
 
-DEPENDS_append = " \
+DEPENDS:append = " \
 	${@oe.utils.conditional("TRUSTED_BOARD_BOOT", "1", "python3-pycryptodome-native python3-pycryptodomex-native secprv-native", "",d)} \
 "
 
-EXTRA_OEMAKE_append = " \
+EXTRA_OEMAKE:append = " \
 	${@oe.utils.conditional("ENABLE_SPD_OPTEE", "1", " SPD=opteed", "",d)} \
 	${@oe.utils.conditional("TRUSTED_BOARD_BOOT", "1", " TRUSTED_BOARD_BOOT=1 COT=tbbr", "",d)} \
 "
 
-do_compile_append() {
+do_compile:append() {
 
 	if [ "${TRUSTED_BOARD_BOOT}" = "1" ]; then
 		python3 ${MANIFEST_GENERATION_KCERT} -info ${DIRPATH_MANIFEST_GENTOOL}/info/bl2_${IMG_AUTH_MODE}_info.xml \
@@ -45,7 +45,7 @@ do_compile_append() {
 	fi
 }
 
-do_install_append () {
+do_install:append () {
 
 	if [ "${TRUSTED_BOARD_BOOT}" = "1" ]; then
 		# install firmware images

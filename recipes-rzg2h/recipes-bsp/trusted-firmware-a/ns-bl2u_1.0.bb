@@ -10,7 +10,7 @@ BRANCH = "main"
 SRC_URI = "${NS_BL2U_URL};branch=${BRANCH};protocol=https"
 SRCREV = "b7a9f96c5ba81ab920cd46d96a89a248e1cb9ff5"
 
-SRC_URI_append = " \
+SRC_URI:append = " \
 	file://0001-Fix-build-with-gcc-8.3.patch \
 "
 

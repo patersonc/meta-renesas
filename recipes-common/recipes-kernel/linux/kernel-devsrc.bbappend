@@ -1,1 +1,1 @@
-INSANE_SKIP_${PN} += "arch"
+INSANE_SKIP:${PN} += "arch"

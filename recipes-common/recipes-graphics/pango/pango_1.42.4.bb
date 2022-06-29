@@ -30,17 +30,17 @@ GIR_MESON_OPTION = 'gir'
 LEAD_SONAME = "libpango-1.0*"
 LIBV = "1.8.0"
 
-FILES_${PN} = "${bindir}/* ${libdir}/libpango*${SOLIBS}"
-FILES_${PN}-dev += "${libdir}/pango/${LIBV}/modules/*.la"
+FILES:${PN} = "${bindir}/* ${libdir}/libpango*${SOLIBS}"
+FILES:${PN}-dev += "${libdir}/pango/${LIBV}/modules/*.la"
 
-RDEPENDS_${PN}-ptest += "liberation-fonts cantarell-fonts"
+RDEPENDS:${PN}-ptest += "liberation-fonts cantarell-fonts"
 
-RPROVIDES_${PN} += "pango-modules pango-module-indic-lang \
+RPROVIDES:${PN} += "pango-modules pango-module-indic-lang \
                     pango-module-basic-fc pango-module-arabic-lang"
 
 BBCLASSEXTEND = "native nativesdk"
 
-do_install_append () {
+do_install:append () {
 	if [ "${PTEST_ENABLED}" != "1" ]; then
 		rm -rf ${D}${libexecdir}/installed-tests ${D}${datadir}/installed-tests
                 rmdir --ignore-fail-on-non-empty ${D}${libexecdir} ${D}${datadir}

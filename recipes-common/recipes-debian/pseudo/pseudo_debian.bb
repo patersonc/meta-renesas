@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=243b725d71bb5df4a1e5920b344b86ad"
 
 inherit debian-package
 require recipes-common/recipes-debian/sources/pseudo.inc
-FILESPATH_append = ":${COREBASE}/meta/recipes-devtools/pseudo/files:${THISDIR}/pseudo"
+FILESPATH:append = ":${COREBASE}/meta/recipes-devtools/pseudo/files:${THISDIR}/pseudo"
 DEPENDS += "python3-native"
 
 SRC_URI += " \

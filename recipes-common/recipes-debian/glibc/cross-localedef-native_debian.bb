@@ -27,7 +27,7 @@ inherit autotools
 
 SRCREV_localedef ?= "cd9f958c4c94a638fa7b2b4e21627364f1a1a655"
 
-FILESPATH_append = ":${FILE_DIRNAME}/glibc:${COREBASE}/meta/recipes-core/glibc/glibc"
+FILESPATH:append = ":${FILE_DIRNAME}/glibc:${COREBASE}/meta/recipes-core/glibc/glibc"
 SRC_URI += " \
     git://github.com/kraj/localedef;branch=master;name=localedef;destsuffix=${BP}/localedef;protocol=https \
     file://0016-timezone-re-written-tzselect-as-posix-sh.patch \

@@ -9,8 +9,8 @@ SRC_URI = "${MMNGR_LIB_URI};branch=rcar_gen3"
 SRCREV = "e55a8356c906486ee0be78b2a1fde227e7a578f4"
 
 # Get Wordsize of test app and change their names later to avoid override
-WS_aarch64 = ""
-WS_virtclass-multilib-lib32 = "32"
+WS:aarch64 = ""
+WS:virtclass-multilib-lib32 = "32"
 
 # These modules are machine specific.
 PACKAGE_ARCH = "${MACHINE_ARCH}"

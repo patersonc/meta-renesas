@@ -19,10 +19,10 @@ DEPENDS += "python3-pyelftools-native python3-pycryptodome-native python3-pycryp
 OPTEE_CLIENT_EXPORT = "${STAGING_DIR_HOST}${prefix}"
 TEEC_EXPORT = "${STAGING_DIR_HOST}${prefix}"
 TA_DEV_KIT_DIR = "${STAGING_INCDIR}/optee/export-user_ta/"
-INSANE_SKIP_${PN} = "ldflags"
-INSANE_SKIP_${PN}-dev = "ldflags"
+INSANE_SKIP:${PN} = "ldflags"
+INSANE_SKIP:${PN}-dev = "ldflags"
 
-CFLAGS_prepend = "--sysroot=${STAGING_DIR_HOST}"
+CFLAGS:prepend = "--sysroot=${STAGING_DIR_HOST}"
 
 EXTRA_OEMAKE = " \
 	TA_DEV_KIT_DIR=${TA_DEV_KIT_DIR} \
@@ -62,13 +62,13 @@ PACKAGES = " \
     ${PN} \
     ${PN}-dbg \
 "
-FILES_${PN} += " \
+FILES:${PN} += " \
     ${bindir}/fwu \
     ${nonarch_base_libdir}/optee_armtz/*.ta \
     /usr/src/* \
     /usr/bin/.debug/* \
 "
 
-FILES_${PN}-dbg += "${bindir}/.debug"
+FILES:${PN}-dbg += "${bindir}/.debug"
 
 addtask deploy before do_build after do_install

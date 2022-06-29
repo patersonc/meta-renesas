@@ -38,7 +38,7 @@ libdir[unexport] = "1"
 
 S = "${WORKDIR}/git"
 
-CFLAGS_prepend = "--sysroot=${STAGING_DIR_HOST}"
+CFLAGS:prepend = "--sysroot=${STAGING_DIR_HOST}"
 
 EXTRA_OEMAKE = " \
 	PLATFORM=${PLATFORM} PLATFORM_FLAVOR=${PLATFORM_FLAVOR} \
@@ -64,7 +64,7 @@ do_install() {
 	#install TA devkit
 	install -d ${D}/usr/include/optee/export-user_ta/
 
-	for f in  ${B}/out/arm-plat-${PLATFORM}/export-ta_arm64/* ; do
+	for f in  ${B}/out/arm-plat-${PLATFORM}/export-ta:arm64/* ; do
 		cp -aR	$f	${D}/usr/include/optee/export-user_ta/
 	done
 
@@ -82,9 +82,9 @@ do_install() {
 	fi
 }
 
-FILES_${PN} = "/boot "
+FILES:${PN} = "/boot "
 SYSROOT_DIRS += "/boot"
 
-FILES_${PN}-dev = "/usr/include/optee"
+FILES:${PN}-dev = "/usr/include/optee"
 
-INSANE_SKIP_${PN}-dev = "staticdev"
+INSANE_SKIP:${PN}-dev = "staticdev"

@@ -14,7 +14,7 @@ PACKAGES = " \
     packagegroup-multimedia-kernel-modules \
 "
 
-RDEPENDS_packagegroup-multimedia-kernel-modules = " \
+RDEPENDS:packagegroup-multimedia-kernel-modules = " \
     kernel-module-mmngr \
     kernel-module-mmngrbuf \
     kernel-module-vspm \

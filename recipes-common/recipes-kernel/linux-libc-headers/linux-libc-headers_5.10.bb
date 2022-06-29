@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
 SRC_URI = "${KERNEL_URL};branch=${BRANCH}"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/../linux/linux-renesas:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/../linux/linux-renesas:"
 
 S = "${WORKDIR}/git"
 

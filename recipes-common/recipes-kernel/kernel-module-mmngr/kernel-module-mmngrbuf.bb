@@ -47,9 +47,9 @@ PACKAGES = "\
     ${PN}-dev \
 "
 
-FILES_${PN} = " \
+FILES:${PN} = " \
     /lib/modules/${KERNEL_VERSION}/extra/mmngrbuf.ko \
 "
 
-RPROVIDES_${PN} += "kernel-module-mmngrbuf"
+RPROVIDES:${PN} += "kernel-module-mmngrbuf"
 KERNEL_MODULE_AUTOLOAD = "mmngrbuf"

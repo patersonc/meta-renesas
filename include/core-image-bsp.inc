@@ -1,5 +1,5 @@
 # Basic packages
-IMAGE_INSTALL_append = " \
+IMAGE_INSTALL:append = " \
     bonnie++ \
     util-linux \
     busybox \
@@ -32,7 +32,7 @@ IMAGE_INSTALL_append = " \
 "
 
 # Installation for Wifi/Bluetooth packages
-IMAGE_INSTALL_append_rzg2h = " \
+IMAGE_INSTALL:append_rzg2h = " \
     watchdog \
     linux-firmware-ti-connectivity-license \
     linux-firmware-wl18xx \
@@ -49,7 +49,7 @@ IMAGE_INSTALL_append_rzg2h = " \
 "
 
 # Additional tools for support Tool develop
-IMAGE_INSTALL_append = " \
+IMAGE_INSTALL:append = " \
     ckermit \
     connman \
     connman-client \
@@ -63,6 +63,6 @@ IMAGE_INSTALL_append = " \
 "
 
 # Additional tools for support testing Realtime characteristic in system
-IMAGE_INSTALL_append = " \
+IMAGE_INSTALL:append = " \
 	${@oe.utils.conditional("IS_RT_BSP", "1", " rt-tests ", " ",d)} \
 "

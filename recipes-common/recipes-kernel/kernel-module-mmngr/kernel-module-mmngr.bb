@@ -9,7 +9,7 @@ PR = "r0"
 S = "${WORKDIR}/git"
 MMNGR_DRV_DIR = "mmngr_drv/mmngr/mmngr-module/files/mmngr"
 
-SRC_URI_append = " \
+SRC_URI:append = " \
     file://0001-Add-physical-address-translating-feature.patch \
     file://0002-mmngr_drv-mmngr-Add-checking-NULL-vma-in-mm_cnv_addr.patch \
     file://0003-mmngr-Get-start-address-of-MMP-area-from-DT.patch \
@@ -23,7 +23,7 @@ SRC_URI_append = " \
     file://0011-mmngr-change-address-setting-for-H3N-Swap-mode.patch \
 "
 
-SRC_URI_append_rzg2l = " \
+SRC_URI:append_rzg2l = " \
     file://0001-Reduce-MM_OMXBUF_SIZE-for-omx.patch \
     file://0002-Fix-ioctl-MM_IOC_VTOP-hang-up.patch \
     file://0003-mmngr_drv-mmngr-module-drv-Update-physical-convert-f.patch \
@@ -77,10 +77,10 @@ PACKAGES = "\
     ${PN}-dev \
 "
 
-FILES_${PN} = " \
+FILES:${PN} = " \
     /lib/modules/${KERNEL_VERSION}/extra/mmngr.ko \
 "
 
-RPROVIDES_${PN} += "kernel-module-mmngr"
+RPROVIDES:${PN} += "kernel-module-mmngr"
 
 KERNEL_MODULE_AUTOLOAD = "mmngr"

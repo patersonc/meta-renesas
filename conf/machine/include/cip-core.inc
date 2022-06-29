@@ -22,7 +22,7 @@ PREFERRED_VERSION_gdb_debian = "8.1"
 
 PREFERRED_VERSION_busybox_debian = "1.31.%"
 
-RDEPENDS_xz_append_debian = "bash"
-RDEPENDS_gzip_append_debian = "bash"
-RDEPENDS_adduser_append_debian = "perl"
+RDEPENDS:xz:append_debian = "bash"
+RDEPENDS:gzip:append_debian = "bash"
+RDEPENDS:adduser:append_debian = "perl"
 

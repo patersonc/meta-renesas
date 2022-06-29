@@ -31,5 +31,5 @@ do_install() {
     chgrp -R $(stat -c "%G" ${D}${datadir}/${PN}) ${D}${datadir}/${PN} 
 }
 
-FILES_${PN} += "${datadir}/${PN}"
+FILES:${PN} += "${datadir}/${PN}"
 

@@ -74,6 +74,6 @@ do_deploy() {
 }
 addtask deploy before do_build after do_compile
 
-FILES_${PN}-dev = "/usr/include/optee"
+FILES:${PN}-dev = "/usr/include/optee"
 
-INSANE_SKIP_${PN}-dev = "staticdev"
+INSANE_SKIP:${PN}-dev = "staticdev"

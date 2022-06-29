@@ -7,7 +7,7 @@ LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://presentation.pro;md5=fcb836475bffdd2776009a329c13b560"
 
 DEPENDS = "qtdeclarative"
-#RDEPENDS_${PN}-dev = ""
+#RDEPENDS:${PN}-dev = ""
 
 SRCREV = "860804a58bf47eaecdcc1acf81620bb998bf8cbf"
 SRC_URI = "git://code.qt.io/qt-labs/qml-presentation-system.git"
@@ -19,6 +19,6 @@ do_install() {
      install -m 644 ${S}/src/* ${D}${libdir}/qt5/qml/Qt/labs/presentation/
 }
 
-#FILES_${PN}-dbg += "${datadir}/${P}/.debug"
-FILES_${PN} += "${datadir} \
+#FILES:${PN}-dbg += "${datadir}/${P}/.debug"
+FILES:${PN} += "${datadir} \
 	        ${libdir}/*"
