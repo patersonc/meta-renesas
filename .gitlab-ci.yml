@@ -1,6 +1,6 @@
 image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubuntu-20.04-latest
 
-.BSP-3.0.0:
+.BSP-3.0.0:kirkstone:
   stage: build
   tags:
     - yocto
@@ -44,8 +44,25 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
       - build/build/tmp/deploy/images/
     when: always
 
-BSP-3.0.0_smarc-rzg2l_core-image-minimal:
-  extends: .BSP-3.0.0
-  variables:
-    PLATFORM: smarc-rzg2l
-    IMAGE: core-image-minimal
+core:
+  extends: .BSP-3.0.0:kirkstone
+  parallel:
+    matrix:
+      - IMAGE: core-image-minimal
+        PLATFORM:
+          - hihope-rzg2m
+          - smarc-rzg2l
+
+extra:
+  extends: .BSP-3.0.0:kirkstone
+  when: manual
+  parallel:
+    matrix:
+      - IMAGE:
+        - core-image-minimal
+        PLATFORM:
+          - hihope-rzg2h
+          - hihope-rzg2n
+          - ek874
+          - smarc-rzg2lc
+          - smarc-rzg2ul
