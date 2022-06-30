@@ -7,6 +7,7 @@ DEPENDS = "mmngr-user-module mmngrbuf-user-module \
 
 PR = "r0"
 
+PACKAGE_ARCH = "${TUNE_PKGARCH}"
 inherit packagegroup
 
 PACKAGES = " \
