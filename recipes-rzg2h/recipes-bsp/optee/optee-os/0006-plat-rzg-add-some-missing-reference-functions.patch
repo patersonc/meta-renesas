@@ -1,4 +1,4 @@
-From c3dbe1602779a7683cd27784a3531885ab9c241f Mon Sep 17 00:00:00 2001
+From 43bd8801710a5b23409105b695ace181261b63ec Mon Sep 17 00:00:00 2001
 From: hienhuynh <hien.huynh.px@renesas.com>
 Date: Mon, 28 Jun 2021 14:22:45 +0700
 Subject: [PATCH] plat-rzg: add some missing reference functions
@@ -7,13 +7,14 @@ This commit is created to add some missing reference functions
 when OPTEE-os is updated to v3.13.
 
 Signed-off-by: hienhuynh <hien.huynh.px@renesas.com>
+
 ---
- core/arch/arm/plat-rzg/kern.ld.S     |  6 ++++++
- core/arch/arm/plat-rzg/link_dummy.ld |  6 ++++++
- 2 files changed, 12 insertions(+), 0 deletions(-)
+ core/arch/arm/plat-rzg/kern.ld.S     | 6 ++++++
+ core/arch/arm/plat-rzg/link_dummy.ld | 6 ++++++
+ 2 files changed, 12 insertions(+)
 
 diff --git a/core/arch/arm/plat-rzg/kern.ld.S b/core/arch/arm/plat-rzg/kern.ld.S
-index 5fbe131..50f1491 100644
+index 5fbe131c..0a02eabd 100644
 --- a/core/arch/arm/plat-rzg/kern.ld.S
 +++ b/core/arch/arm/plat-rzg/kern.ld.S
 @@ -467,15 +467,19 @@ __vcore_unpg_ro_size = __flatmap_unpg_ro_size;
@@ -46,7 +47,7 @@ index 5fbe131..50f1491 100644
  
  #ifdef CFG_CORE_SANITIZE_KADDRESS
 diff --git a/core/arch/arm/plat-rzg/link_dummy.ld b/core/arch/arm/plat-rzg/link_dummy.ld
-index 1efc585..cd73fc1 100644
+index 1efc585f..cd73fc1c 100644
 --- a/core/arch/arm/plat-rzg/link_dummy.ld
 +++ b/core/arch/arm/plat-rzg/link_dummy.ld
 @@ -76,16 +76,22 @@ __tmp_hashes_size = .;
@@ -72,6 +73,3 @@ index 1efc585..cd73fc1 100644
  __suspend_to_ram_backup_end = .;
  __suspend_to_ram_backup_start = .;
  __suspend_to_ram_backup_num_end = .;
--- 
-2.7.4
-

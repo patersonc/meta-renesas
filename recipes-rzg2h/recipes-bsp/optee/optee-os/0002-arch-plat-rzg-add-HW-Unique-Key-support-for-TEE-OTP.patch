@@ -1,23 +1,24 @@
-From 392c3b4fc71e6b26a5e47e604e664ff5923ac49f Mon Sep 17 00:00:00 2001
+From aa4bc9040975090e1ba67cac43defe296e2b6fea Mon Sep 17 00:00:00 2001
 From: hienhuynh <hien.huynh.px@renesas.com>
 Date: Thu, 29 Apr 2021 13:18:57 +0700
-Subject: [PATCH 2/3] arch: plat-rzg: add HW Unique Key support for TEE OTP
+Subject: [PATCH] arch: plat-rzg: add HW Unique Key support for TEE OTP
 
 This patch will add support for getting HW Unique Key, it support for
 feature TEE OTP.
 
 Signed-off-by: Huynh Thanh Hung <hung.huynh.wz@renesas.com>
 Signed-off-by: hienhuynh <hien.huynh.px@renesas.com>
+
 ---
  core/arch/arm/plat-rzg/main.c            |   1 +
  core/arch/arm/plat-rzg/platform_config.h |   3 +
  core/arch/arm/plat-rzg/sub.mk            |   3 +
- core/arch/arm/plat-rzg/tee_common_otp.c  | 118 +++++++++++++++++++++++++++++++
+ core/arch/arm/plat-rzg/tee_common_otp.c  | 118 +++++++++++++++++++++++
  4 files changed, 125 insertions(+)
  create mode 100644 core/arch/arm/plat-rzg/tee_common_otp.c
 
 diff --git a/core/arch/arm/plat-rzg/main.c b/core/arch/arm/plat-rzg/main.c
-index 31dfd08..6a1021b 100644
+index 31dfd084..6a1021b1 100644
 --- a/core/arch/arm/plat-rzg/main.c
 +++ b/core/arch/arm/plat-rzg/main.c
 @@ -11,6 +11,7 @@
@@ -29,7 +30,7 @@ index 31dfd08..6a1021b 100644
  register_phys_mem_pgdir(MEM_AREA_IO_SEC, GICD_BASE, GIC_DIST_REG_SIZE);
  register_phys_mem_pgdir(MEM_AREA_IO_SEC, GICC_BASE, GIC_DIST_REG_SIZE);
 diff --git a/core/arch/arm/plat-rzg/platform_config.h b/core/arch/arm/plat-rzg/platform_config.h
-index eacc5a4..0638b53 100644
+index eacc5a42..0638b53a 100644
 --- a/core/arch/arm/plat-rzg/platform_config.h
 +++ b/core/arch/arm/plat-rzg/platform_config.h
 @@ -12,6 +12,9 @@
@@ -43,7 +44,7 @@ index eacc5a4..0638b53 100644
  #define GICC_BASE		0xF1020000
  #define GICD_BASE		0xF1010000
 diff --git a/core/arch/arm/plat-rzg/sub.mk b/core/arch/arm/plat-rzg/sub.mk
-index 8ddc2fd..b194244 100644
+index 8ddc2fd4..b1942448 100644
 --- a/core/arch/arm/plat-rzg/sub.mk
 +++ b/core/arch/arm/plat-rzg/sub.mk
 @@ -1,2 +1,5 @@
@@ -54,7 +55,7 @@ index 8ddc2fd..b194244 100644
 +cppflags-y += -DLTC_NO_PROTOTYPES
 diff --git a/core/arch/arm/plat-rzg/tee_common_otp.c b/core/arch/arm/plat-rzg/tee_common_otp.c
 new file mode 100644
-index 0000000..43c00aa
+index 00000000..340dcd41
 --- /dev/null
 +++ b/core/arch/arm/plat-rzg/tee_common_otp.c
 @@ -0,0 +1,118 @@
@@ -176,6 +177,3 @@ index 0000000..43c00aa
 +
 +	return rc;
 +}
--- 
-2.7.4
-

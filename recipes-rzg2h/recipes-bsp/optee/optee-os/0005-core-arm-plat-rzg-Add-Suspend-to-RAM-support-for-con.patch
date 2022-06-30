@@ -1,21 +1,21 @@
-From 0c45071c6e02d361078c843ad6dde54a0a2bd756 Mon Sep 17 00:00:00 2001
+From ef36d329b95b344099816a065c0cde2cf03fae79 Mon Sep 17 00:00:00 2001
 From: hienhuynh <hien.huynh.px@renesas.com>
 Date: Thu, 29 Apr 2021 14:43:56 +0700
-Subject: [PATCH 5/5] core: arm: plat-rzg: Add Suspend to RAM support for
- console
+Subject: [PATCH] core: arm: plat-rzg: Add Suspend to RAM support for console
 
 This patch will add support suspend to RAM for console.
 It also fix the address to setting register when init console.
 
 Signed-off-by: Huynh Thanh Hung <hung.huynh.wz@renesas.com>
 Signed-off-by: hienhuynh <hien.huynh.px@renesas.com>
+
 ---
  core/arch/arm/plat-rzg/main.c | 18 ++++++++++++++++++
  core/drivers/scif.c           |  5 ++++-
  2 files changed, 22 insertions(+), 1 deletion(-)
 
 diff --git a/core/arch/arm/plat-rzg/main.c b/core/arch/arm/plat-rzg/main.c
-index 853a126..bab5075 100644
+index 853a1262..bab50756 100644
 --- a/core/arch/arm/plat-rzg/main.c
 +++ b/core/arch/arm/plat-rzg/main.c
 @@ -96,3 +96,21 @@ void console_init(void)
@@ -41,11 +41,11 @@ index 853a126..bab5075 100644
 +#endif
 +#endif
 diff --git a/core/drivers/scif.c b/core/drivers/scif.c
-index ff33ea3..ac0a48c 100644
+index 32c382d6..d556c490 100644
 --- a/core/drivers/scif.c
 +++ b/core/drivers/scif.c
-@@ -85,7 +85,10 @@ void scif_uart_init(struct scif_uart_data *pd, paddr_t base)
- 	pd->chip.ops = &scif_uart_ops;
+@@ -89,7 +89,10 @@ void scif_uart_init(struct scif_uart_data *pd, paddr_t pbase)
+ 	base = io_pa_or_va(&pd->base, SCIF_REG_SIZE);
  
  	/* Set Transmit Enable in Control register */
 -	io_setbits16(base + SCIF_SCSCR, SCSCR_TE);
@@ -56,6 +56,3 @@ index ff33ea3..ac0a48c 100644
  
  	scif_uart_flush(&pd->chip);
  }
--- 
-2.7.4
-

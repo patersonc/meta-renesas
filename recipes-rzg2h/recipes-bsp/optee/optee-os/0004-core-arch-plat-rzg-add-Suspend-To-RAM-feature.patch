@@ -1,7 +1,7 @@
-From 95f2716be1b5e1e40d2f86411c621e1c246d9928 Mon Sep 17 00:00:00 2001
+From 468f52cd071678e4dab98bccc80497838db73bf5 Mon Sep 17 00:00:00 2001
 From: hienhuynh <hien.huynh.px@renesas.com>
 Date: Thu, 29 Apr 2021 14:40:19 +0700
-Subject: [PATCH 4/5] core: arch: plat-rzg: add Suspend To RAM feature
+Subject: [PATCH] core: arch: plat-rzg: add Suspend To RAM feature
 
 This patch will add Suspend to RAM feature for platform rzg
 Reference RCar repo:
@@ -9,15 +9,16 @@ https://github.com/renesas-rcar/optee_os/commit/3bc428825ee37409b3e0827e6e0b8688
 
 Signed-off-by: Huynh Thanh Hung <hung.huynh.wz@renesas.com>
 Signed-off-by: hienhuynh <hien.huynh.px@renesas.com>
+
 ---
  core/arch/arm/plat-rzg/conf.mk              |   1 +
- core/arch/arm/plat-rzg/kern.ld.S            | 510 ++++++++++++++++++++++++++++
+ core/arch/arm/plat-rzg/kern.ld.S            | 510 ++++++++++++++++++++
  core/arch/arm/plat-rzg/link.mk              |  14 +
- core/arch/arm/plat-rzg/link_dummy.ld        |  98 ++++++
- core/arch/arm/plat-rzg/main.c               |  60 ++++
+ core/arch/arm/plat-rzg/link_dummy.ld        |  98 ++++
+ core/arch/arm/plat-rzg/main.c               |  60 +++
  core/arch/arm/plat-rzg/rzg_common.h         |   8 +
- core/arch/arm/plat-rzg/rzg_suspend_to_ram.c | 180 ++++++++++
- core/arch/arm/plat-rzg/rzg_suspend_to_ram.h |  62 ++++
+ core/arch/arm/plat-rzg/rzg_suspend_to_ram.c | 180 +++++++
+ core/arch/arm/plat-rzg/rzg_suspend_to_ram.h |  62 +++
  core/arch/arm/plat-rzg/sub.mk               |   8 +-
  9 files changed, 940 insertions(+), 1 deletion(-)
  create mode 100644 core/arch/arm/plat-rzg/kern.ld.S
@@ -26,7 +27,7 @@ Signed-off-by: hienhuynh <hien.huynh.px@renesas.com>
  create mode 100644 core/arch/arm/plat-rzg/rzg_suspend_to_ram.h
 
 diff --git a/core/arch/arm/plat-rzg/conf.mk b/core/arch/arm/plat-rzg/conf.mk
-index cd3d04a..71e4048 100644
+index cd3d04af..71e40485 100644
 --- a/core/arch/arm/plat-rzg/conf.mk
 +++ b/core/arch/arm/plat-rzg/conf.mk
 @@ -28,6 +28,7 @@ $(call force,CFG_CORE_CLUSTER_SHIFT,1)
@@ -39,7 +40,7 @@ index cd3d04a..71e4048 100644
  $(call force,CFG_TEE_CORE_NB_CORE,8)
 diff --git a/core/arch/arm/plat-rzg/kern.ld.S b/core/arch/arm/plat-rzg/kern.ld.S
 new file mode 100644
-index 0000000..5fbe131
+index 00000000..5fbe131c
 --- /dev/null
 +++ b/core/arch/arm/plat-rzg/kern.ld.S
 @@ -0,0 +1,510 @@
@@ -554,7 +555,7 @@ index 0000000..5fbe131
 +__asan_map_size = __asan_map_end - __asan_map_start;
 +#endif /*CFG_CORE_SANITIZE_KADDRESS*/
 diff --git a/core/arch/arm/plat-rzg/link.mk b/core/arch/arm/plat-rzg/link.mk
-index 229c4b7..3d4b342 100644
+index 229c4b70..3d4b3425 100644
 --- a/core/arch/arm/plat-rzg/link.mk
 +++ b/core/arch/arm/plat-rzg/link.mk
 @@ -1,3 +1,17 @@
@@ -577,7 +578,7 @@ index 229c4b7..3d4b342 100644
 +	$(q)scripts/gen_tee_bin.py --input $< --out_tee_raw_bin $@
 diff --git a/core/arch/arm/plat-rzg/link_dummy.ld b/core/arch/arm/plat-rzg/link_dummy.ld
 new file mode 100644
-index 0000000..1efc585
+index 00000000..1efc585f
 --- /dev/null
 +++ b/core/arch/arm/plat-rzg/link_dummy.ld
 @@ -0,0 +1,98 @@
@@ -680,7 +681,7 @@ index 0000000..1efc585
 +PROVIDE(tee_svc_handler = 0);
 +PROVIDE(init_teecore = 0);
 diff --git a/core/arch/arm/plat-rzg/main.c b/core/arch/arm/plat-rzg/main.c
-index 0409ef8..853a126 100644
+index 0409ef84..853a1262 100644
 --- a/core/arch/arm/plat-rzg/main.c
 +++ b/core/arch/arm/plat-rzg/main.c
 @@ -11,6 +11,15 @@
@@ -758,7 +759,7 @@ index 0409ef8..853a126 100644
  
  void console_init(void)
 diff --git a/core/arch/arm/plat-rzg/rzg_common.h b/core/arch/arm/plat-rzg/rzg_common.h
-index 7b41df9..5c3a03c 100644
+index 7b41df90..5c3a03cb 100644
 --- a/core/arch/arm/plat-rzg/rzg_common.h
 +++ b/core/arch/arm/plat-rzg/rzg_common.h
 @@ -91,4 +91,12 @@
@@ -776,7 +777,7 @@ index 7b41df9..5c3a03c 100644
  #endif /* RZG_COMMON_H */
 diff --git a/core/arch/arm/plat-rzg/rzg_suspend_to_ram.c b/core/arch/arm/plat-rzg/rzg_suspend_to_ram.c
 new file mode 100644
-index 0000000..3861b6d
+index 00000000..430e6e62
 --- /dev/null
 +++ b/core/arch/arm/plat-rzg/rzg_suspend_to_ram.c
 @@ -0,0 +1,180 @@
@@ -962,7 +963,7 @@ index 0000000..3861b6d
 +}
 diff --git a/core/arch/arm/plat-rzg/rzg_suspend_to_ram.h b/core/arch/arm/plat-rzg/rzg_suspend_to_ram.h
 new file mode 100644
-index 0000000..aa5a539
+index 00000000..aa5a5399
 --- /dev/null
 +++ b/core/arch/arm/plat-rzg/rzg_suspend_to_ram.h
 @@ -0,0 +1,62 @@
@@ -1029,7 +1030,7 @@ index 0000000..aa5a539
 +
 +#endif /* RZG_SUSPEND_TO_RAM_H */
 diff --git a/core/arch/arm/plat-rzg/sub.mk b/core/arch/arm/plat-rzg/sub.mk
-index 796befd..88201c7 100644
+index 796befd3..fa699ea1 100644
 --- a/core/arch/arm/plat-rzg/sub.mk
 +++ b/core/arch/arm/plat-rzg/sub.mk
 @@ -2,4 +2,10 @@ global-incdirs-y += .
@@ -1044,6 +1045,3 @@ index 796befd..88201c7 100644
 +endif
 +
 +cppflags-y += -DLTC_NO_PROTOTYPES -DRZG_DRAM_ECC=$(RZG_DRAM_ECC) -DRZG_ECC_FULL=$(RZG_ECC_FULL) -DPMIC_ROHM_BD9571=$(PMIC_ROHM_BD9571)
--- 
-2.7.4
-

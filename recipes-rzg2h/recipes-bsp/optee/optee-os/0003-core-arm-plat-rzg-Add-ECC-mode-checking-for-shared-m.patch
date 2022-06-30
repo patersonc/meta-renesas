@@ -1,8 +1,8 @@
-From ebe29fd9cc0d8eaed4ffb652c128f25ca0e78c0f Mon Sep 17 00:00:00 2001
+From 899888a718e69ab5ca3f3815f9de3524a4f94160 Mon Sep 17 00:00:00 2001
 From: hienhuynh <hien.huynh.px@renesas.com>
 Date: Thu, 29 Apr 2021 13:33:24 +0700
-Subject: [PATCH 3/3] core: arm: plat-rzg: Add ECC mode checking for shared
- memory region
+Subject: [PATCH] core: arm: plat-rzg: Add ECC mode checking for shared memory
+ region
 
 When we use ECC setting, the memory and size
 of DDR we can use may be changed. So that we must modify them to
@@ -14,17 +14,18 @@ value when other source use these pre-define.
 
 Signed-off-by: Huynh Thanh Hung <hung.huynh.wz@renesas.com>
 Signed-off-by: hienhuynh <hien.huynh.px@renesas.com>
+
 ---
  core/arch/arm/plat-rzg/conf.mk           |  2 +
  core/arch/arm/plat-rzg/main.c            |  2 +
- core/arch/arm/plat-rzg/platform_config.h | 29 ----------
- core/arch/arm/plat-rzg/rzg_common.h      | 94 ++++++++++++++++++++++++++++++++
+ core/arch/arm/plat-rzg/platform_config.h | 29 --------
+ core/arch/arm/plat-rzg/rzg_common.h      | 94 ++++++++++++++++++++++++
  core/arch/arm/plat-rzg/sub.mk            |  2 +-
  5 files changed, 99 insertions(+), 30 deletions(-)
  create mode 100644 core/arch/arm/plat-rzg/rzg_common.h
 
 diff --git a/core/arch/arm/plat-rzg/conf.mk b/core/arch/arm/plat-rzg/conf.mk
-index e3fa853..cd3d04a 100644
+index e3fa8538..cd3d04af 100644
 --- a/core/arch/arm/plat-rzg/conf.mk
 +++ b/core/arch/arm/plat-rzg/conf.mk
 @@ -44,3 +44,5 @@ $(call force,CFG_ARM32_core,y)
@@ -34,7 +35,7 @@ index e3fa853..cd3d04a 100644
 +RZG_DRAM_ECC ?= 0
 +RZG_ECC_FULL ?= 0
 diff --git a/core/arch/arm/plat-rzg/main.c b/core/arch/arm/plat-rzg/main.c
-index 6a1021b..0409ef8 100644
+index 6a1021b1..0409ef84 100644
 --- a/core/arch/arm/plat-rzg/main.c
 +++ b/core/arch/arm/plat-rzg/main.c
 @@ -11,6 +11,8 @@
@@ -47,7 +48,7 @@ index 6a1021b..0409ef8 100644
  register_phys_mem_pgdir(MEM_AREA_IO_SEC, CONSOLE_UART_BASE, SCIF_REG_SIZE);
  register_phys_mem_pgdir(MEM_AREA_IO_SEC, GICD_BASE, GIC_DIST_REG_SIZE);
 diff --git a/core/arch/arm/plat-rzg/platform_config.h b/core/arch/arm/plat-rzg/platform_config.h
-index 0638b53..0a0a2b4 100644
+index 0638b53a..0a0a2b47 100644
 --- a/core/arch/arm/plat-rzg/platform_config.h
 +++ b/core/arch/arm/plat-rzg/platform_config.h
 @@ -21,35 +21,6 @@
@@ -88,7 +89,7 @@ index 0638b53..0a0a2b4 100644
  
 diff --git a/core/arch/arm/plat-rzg/rzg_common.h b/core/arch/arm/plat-rzg/rzg_common.h
 new file mode 100644
-index 0000000..7b41df9
+index 00000000..7b41df90
 --- /dev/null
 +++ b/core/arch/arm/plat-rzg/rzg_common.h
 @@ -0,0 +1,94 @@
@@ -187,7 +188,7 @@ index 0000000..7b41df9
 +
 +#endif /* RZG_COMMON_H */
 diff --git a/core/arch/arm/plat-rzg/sub.mk b/core/arch/arm/plat-rzg/sub.mk
-index b194244..796befd 100644
+index b1942448..796befd3 100644
 --- a/core/arch/arm/plat-rzg/sub.mk
 +++ b/core/arch/arm/plat-rzg/sub.mk
 @@ -2,4 +2,4 @@ global-incdirs-y += .
@@ -196,6 +197,3 @@ index b194244..796befd 100644
  
 -cppflags-y += -DLTC_NO_PROTOTYPES
 +cppflags-y += -DLTC_NO_PROTOTYPES -DRZG_DRAM_ECC=$(RZG_DRAM_ECC) -DRZG_ECC_FULL=$(RZG_ECC_FULL)
--- 
-2.7.4
-
