@@ -30,7 +30,7 @@ This layer depends on:
     layers: meta-oe, meta-python, meta-multimedia
     branch: dunfell
     revision: ec978232732edbdd875ac367b5a9c04b881f2e19
-    
+
     URI: http://git.yoctoproject.org/cgit.cgi/meta-gplv2/
     layers: meta-gplv2
     branch: dunfell
@@ -70,14 +70,14 @@ You can get all Yocto build environment from Renesas, or download all Yocto rela
     $ git checkout dunfell-23.0.14
     $ git cherry-pick 9e444
     $ cd ..
-    $     
+    $
     $ git clone https://github.com/openembedded/meta-openembedded
     $ cd meta-openembedded
     $ git checkout ec978232732edbdd875ac367b5a9c04b881f2e19
     $ cd ..
-    $    
+    $
     $ git clone https://git.yoctoproject.org/git/meta-gplv2
-    $ cd meta-gplv2 
+    $ cd meta-gplv2
     $ git checkout 60b251c25ba87e946a0ca4cdc8d17b1cb09292ac
     $
     $ git clone  https://github.com/renesas-rz/meta-renesas.git
@@ -106,7 +106,7 @@ Now the latest version is **BSP-3.0.x**
     $ cd ..
     $
     $ cp vspmfilter.tar.xz meta-renesas/recipes-common/recipes-multimedia/gstreamer/gstreamer1.0-plugin-vspmfilter
-    $ 
+    $
 ```
 
 Initialize a build using the 'oe-init-build-env' script in Poky. e.g.:
@@ -162,11 +162,11 @@ It is possible to change some build configs as below:
 * GPLv3: choose to not allow, or allow, GPLv3 packages
   * **Non-GPLv3 (default):** not allow GPLv3 license. All recipes that has GPLv3 license will be downgrade to older version that has alternative license (done by meta-gplv2). In this setting customer can ignore the risk of strict license GPLv3
   ```
-  INCOMPATIBLE_LICENSE = "GPLv3 GPLv3+"
+  INCOMPATIBLE_LICENSE = "GPL-3.0-only GPL-3.0-or-later"
   ```
   * Allow-GPLv3: allow GPLv3 license. If user is fine with strict copy-left license GPLv3, can use this setting to get newer software version.
   ```
-  #INCOMPATIBLE_LICENSE = "GPLv3 GPLv3+"
+  #INCOMPATIBLE_LICENSE = "GPL-3.0-only GPL-3.0-or-later"
   ```
 * CIP Core: choose the version of CIP Core to build with. CIP Core are software packages that are maintained for long term by CIP community. You can select the value "1" or "0" for CIP_CORE variable
   ```

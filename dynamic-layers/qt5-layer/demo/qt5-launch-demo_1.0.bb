@@ -1,7 +1,7 @@
 SUMMARY = "Qt5 launch demo"
 DESCRIPTION = "Quick tour of Qt 5.0, primarily focusing on its graphical capabilities."
 HOMEPAGE = "http://code.qt.io/cgit/{non-gerrit}/qt-labs/"
-LICENSE = "BSD"
+LICENSE = "BSD-3-Clause"
 
 # This package actually has no License file. Below is dummy info to build
 LIC_FILES_CHKSUM = "file://main.qml;beginline=1;endline=39;md5=46fcfe21b4d58845077530223ab020af"
@@ -27,8 +27,8 @@ do_install() {
     install -m 755 ${WORKDIR}/renesas-bigideasforeveryspace.mp4 ${D}${datadir}/${PN}
 
     # Change the permission to match with filesystem
-    chown -R $(stat -c "%U" ${D}${datadir}/${PN}) ${D}${datadir}/${PN} 
-    chgrp -R $(stat -c "%G" ${D}${datadir}/${PN}) ${D}${datadir}/${PN} 
+    chown -R $(stat -c "%U" ${D}${datadir}/${PN}) ${D}${datadir}/${PN}
+    chgrp -R $(stat -c "%G" ${D}${datadir}/${PN}) ${D}${datadir}/${PN}
 }
 
 FILES:${PN} += "${datadir}/${PN}"
