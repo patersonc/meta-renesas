@@ -21,31 +21,18 @@ This layer depends on:
 
     URI: git://git.yoctoproject.org/poky
     layers: meta, meta-poky, meta-yocto-bsp
-    branch: dunfell
-    revision: bba323389749ec3e306509f8fb12649f031be152
-    (tag: dunfell-23.0.14)
-    (Need to cherry-pick a commit: git cherry-pick 9e444)
+    branch: kirkstone
+    revision: 453be4d258f71855205f45599eea04589eb4a369
 
     URI: git://git.openembedded.org/meta-openembedded
     layers: meta-oe, meta-python, meta-multimedia
-    branch: dunfell
-    revision: ec978232732edbdd875ac367b5a9c04b881f2e19
+    branch: kirkstone
+    revision: 166ef8dbb14ad98b2094a77fcf352f6c63d5abf2
 
     URI: http://git.yoctoproject.org/cgit.cgi/meta-gplv2/
     layers: meta-gplv2
-    branch: dunfell
-    revision: 60b251c25ba87e946a0ca4cdc8d17b1cb09292ac
-
-    (Optional: core-image-qt)
-    URI: https://github.com/meta-qt5/meta-qt5.git
-    layers: meta-qt5
-    revision: c1b0c9f546289b1592d7a895640de103723a0305
-
-    (Optional: Docker)
-    URI: https://git.yoctoproject.org/git/meta-virtualization
-    layers: meta-virtualization
-    branch: dunfell
-    revision: c5f61e547b90aa8058cf816f00902afed9c96f72
+    branch: kirkstone
+    revision: d2f8b5cdb285b72a4ed93450f6703ca27aa42e8a
 
 ## Build Instructions
 
@@ -67,46 +54,22 @@ You can get all Yocto build environment from Renesas, or download all Yocto rela
 ```bash
     $ git clone https://git.yoctoproject.org/git/poky
     $ cd poky
-    $ git checkout dunfell-23.0.14
-    $ git cherry-pick 9e444
+    $ git checkout 453be4d258f71855205f45599eea04589eb4a369
     $ cd ..
     $
     $ git clone https://github.com/openembedded/meta-openembedded
     $ cd meta-openembedded
-    $ git checkout ec978232732edbdd875ac367b5a9c04b881f2e19
+    $ git checkout 166ef8dbb14ad98b2094a77fcf352f6c63d5abf2
     $ cd ..
     $
     $ git clone https://git.yoctoproject.org/git/meta-gplv2
     $ cd meta-gplv2
-    $ git checkout 60b251c25ba87e946a0ca4cdc8d17b1cb09292ac
+    $ git checkout d2f8b5cdb285b72a4ed93450f6703ca27aa42e8a
     $
     $ git clone  https://github.com/renesas-rz/meta-renesas.git
     $ cd meta-renesas
-    $ git checkout <tag>
+    $ git checkout kirkstone/BSP-3.0.0
     $ cd ..
-    $
-    $ git clone  https://github.com/meta-qt5/meta-qt5.git
-    $ cd meta-qt5
-    $ git checkout -b tmp c1b0c9f546289b1592d7a895640de103723a0305
-    $ cd ..
-    $
-    $ git clone  https://git.yoctoproject.org/git/meta-virtualization -b dunfell
-    $ cd meta-virtualization
-    $ git checkout c5f61e547b90aa8058cf816f00902afed9c96f72
-    $ cd ..
-```
-\<tag\> can be selected in any tags of meta-renesas.
-Now the latest version is **BSP-3.0.x**
-
-[Optional] If you need GPU/Codec support, or build Weston image, this step helps to copy them to build environment. Copy file proprietary_mmp.tar.gz and vspmfilter.tar.xz to $WORK and do below commands.
-```bash
-    $ tar -xf proprietary_mmp.tar.gz
-    $ cd proprietary_mmp
-    $ ./copy_gfx_mmp.sh ../meta-renesas
-    $ cd ..
-    $
-    $ cp vspmfilter.tar.xz meta-renesas/recipes-common/recipes-multimedia/gstreamer/gstreamer1.0-plugin-vspmfilter
-    $
 ```
 
 Initialize a build using the 'oe-init-build-env' script in Poky. e.g.:
@@ -114,17 +77,17 @@ Initialize a build using the 'oe-init-build-env' script in Poky. e.g.:
     $ source poky/oe-init-build-env
 ```
 
-Prepare default configuration files. :
+Prepare default configuration files:
 ```bash
     $ cp $WORK/meta-renesas/docs/template/conf/<board>/*.conf ./conf/
 ```
-\<board\> : smarc-rzg2l, rzg2l-dev
+\<board\>: hihope-rzg2h, hihope-rzg2m, hihope-rzg2n, ek874, smarc-rzg2l,
+smarc-rzg2lc, smarc-rzg2ul
 
 Build the target file system image using bitbake:
 ```bash
-    $ bitbake core-image-<target>
+    $ bitbake core-image-minimal
 ```
-\<target\>:bsp, weston, qt
 
 After completing the images for the target machine will be available in the output
 directory _'tmp/deploy/images/\<supported board name\>'_.
@@ -167,13 +130,4 @@ It is possible to change some build configs as below:
   * Allow-GPLv3: allow GPLv3 license. If user is fine with strict copy-left license GPLv3, can use this setting to get newer software version.
   ```
   #INCOMPATIBLE_LICENSE = "GPL-3.0-only GPL-3.0-or-later"
-  ```
-* QT Demo: choose QT5 Demonstration to build with core-image-qt. QT5 Demos are some applications to demonstrate QT5 framework.
-  * Unset QT_DEMO (default): all QT5 Demos are not built with core-image-qt.
-  ```
-  #QT_DEMO = "1"
-  ```
-  * Allow QT_DEMO: all QT5 Demos are built and included in core-image-qt.
-  ```
-  QT_DEMO = "1"
   ```
