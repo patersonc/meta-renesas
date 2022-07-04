@@ -54,12 +54,6 @@ do_install() {
     install -m 644 ${S}/${VSPMIF_LIB_DIR}/include/fdpm_api.h ${D}/${includedir}/
 }
 
-PACKAGES = "\
-    ${PN} \
-    ${PN}-dev \
-    ${PN}-dbg \
-"
-
 RPROVIDES:${PN} += "vspmif-user-module"
 INSANE_SKIP:${PN} += "libdir"
 INSANE_SKIP:${PN}-dev += "libdir"

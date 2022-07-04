@@ -24,5 +24,4 @@ do_compile:prepend() {
     cp ${WORKDIR}/qt5_video_hd30fps.png ${WORKDIR}/git/QtDemo/qml/QtDemo/demos/video
 }
 
-FILES:${PN}-dbg += "home/root/.debug"
 FILES:${PN} += "home/root"

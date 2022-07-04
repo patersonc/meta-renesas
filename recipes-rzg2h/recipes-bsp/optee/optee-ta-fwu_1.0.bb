@@ -8,7 +8,7 @@ PN = "optee-ta-fwu"
 OPTEE_TA_FWU_URL = "git://github.com/renesas-rz/rzg_optee-ta_fwu.git;branch=master;protocol=https"
 BRANCH = "main"
 
-SRC_URI = "${OPTEE_TA_FWU_URL};branch=${BRANCH};protocol=https" 
+SRC_URI = "${OPTEE_TA_FWU_URL};branch=${BRANCH};protocol=https"
 SRCREV = "f8ba5724eeb74e76228c05983f4d5c0f86bc5e38"
 
 inherit deploy python3native
@@ -48,7 +48,7 @@ do_install () {
     install -p -m 0444 ${S}/ta/*.ta ${D}${nonarch_base_libdir}/optee_armtz
 }
 
-addtask install after do_compile 
+addtask install after do_compile
 
 do_deploy() {
     cd ${D}
@@ -58,17 +58,10 @@ do_deploy() {
     tar -jcvf ${DEPLOYDIR}/optee-ta-fwu-${MACHINE}.tar.bz2 ./*
 }
 
-PACKAGES = " \
-    ${PN} \
-    ${PN}-dbg \
-"
 FILES:${PN} += " \
     ${bindir}/fwu \
     ${nonarch_base_libdir}/optee_armtz/*.ta \
     /usr/src/* \
-    /usr/bin/.debug/* \
 "
-
-FILES:${PN}-dbg += "${bindir}/.debug"
 
 addtask deploy before do_build after do_install

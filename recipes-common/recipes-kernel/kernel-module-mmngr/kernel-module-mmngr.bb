@@ -72,11 +72,6 @@ do_install () {
     install -m 644 ${S}/${MMNGR_DRV_DIR}/include/mmngr_private_cmn.h ${D}/${includedir}/
 }
 
-PACKAGES = "\
-    ${PN} \
-    ${PN}-dev \
-"
-
 FILES:${PN} = " \
     /lib/modules/${KERNEL_VERSION}/extra/mmngr.ko \
 "

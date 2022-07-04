@@ -24,13 +24,4 @@ do_install() {
     install -m 755 ${S}/${QOSIF_TP_DIR}/qos_tp ${D}${RENESAS_DATADIR}/bin/
 }
 
-PACKAGES = " \
-    ${PN} \
-    ${PN}-dbg \
-"
-
 FILES:${PN} = "${RENESAS_DATADIR}/bin/qos_tp"
-
-FILES:${PN}-dbg = " \
-    ${RENESAS_DATADIR}/bin/.debug/* \
-"

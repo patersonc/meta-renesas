@@ -61,11 +61,6 @@ do_install () {
     install -m 644 ${S}/${VSPMIF_DRV_DIR}/include/vspm_if.h ${D}/${includedir}/
 }
 
-PACKAGES = "\
-    ${PN} \
-    ${PN}-dev \
-"
-
 FILES:${PN} = " \
     /lib/modules/${KERNEL_VERSION}/extra/vspm_if.ko \
     /etc/modules-load.d/vspm_if.conf \

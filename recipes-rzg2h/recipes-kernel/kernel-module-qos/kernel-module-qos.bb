@@ -52,12 +52,6 @@ do_install () {
     install -m 644 ${S}/${QOS_DRV_DIR}/qos_public_common.h ${D}/${includedir}/
 }
 
-PACKAGES = " \
-    ${PN} \
-    ${PN}-dev \
-    ${PN}-dbg \
-"
-
 FILES:${PN} = " \
     /lib/modules/${KERNEL_VERSION}/extra/qos.ko \
 "

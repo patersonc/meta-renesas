@@ -55,18 +55,11 @@ do_install:append:rzg2l() {
     fi
 }
 
-PACKAGES = "\
-    ${PN} \
-    ${PN}-dbg \
-"
 FILES:${PN} = " \
     ${@oe.utils.conditional('WS', '32', '${RENESAS_DATADIR}/bin/vspm_tp32 ${RENESAS_DATADIR}/bin/fdpm_tp32', \
     '${RENESAS_DATADIR}/bin/vspm_tp ${RENESAS_DATADIR}/bin/fdpm_tp', d)}"
 
 FILES:rzg2l_${PN} = " \
     ${@oe.utils.conditional('WS', '32', '${RENESAS_DATADIR}/bin/isum_tp32', '${RENESAS_DATADIR}/bin/isum_tp', d)}"
-
-FILES:${PN}-dbg = " \
-    ${RENESAS_DATADIR}/bin/.debug/*"
 
 RPROVIDES:${PN} += "vspmif-tp-user-module"

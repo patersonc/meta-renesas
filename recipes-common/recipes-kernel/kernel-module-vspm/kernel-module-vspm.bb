@@ -80,11 +80,6 @@ do_install:append:rzg2l () {
 # for module when do_clean.
 do_clean[cleandirs] += "${LICENSE_DIRECTORY}/${PN}"
 
-PACKAGES = " \
-    ${PN} \
-    ${PN}-dev \
-"
-
 FILES:${PN} = " \
     /lib/modules/${KERNEL_VERSION}/extra/vspm.ko \
 "

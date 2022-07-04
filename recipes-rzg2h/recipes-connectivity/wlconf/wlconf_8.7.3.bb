@@ -34,5 +34,3 @@ FILES:${PN} += " \
 	${sbindir}/wlconf/official_inis \
 	/lib/firmware/ti-connectivity/wl18xx-conf.bin \
 "
-
-FILES:${PN}-dbg += "${sbindir}/wlconf/.debug"

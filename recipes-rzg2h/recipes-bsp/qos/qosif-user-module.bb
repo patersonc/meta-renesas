@@ -35,12 +35,6 @@ do_install() {
     install -m 644 ${S}/${QOSIF_LIB_DIR}/include/qos_public.h ${D}/${includedir}/
 }
 
-PACKAGES = " \
-    ${PN} \
-    ${PN}-dev \
-    ${PN}-dbg \
-"
-
 FILES:${PN} = " \
     ${libdir}/libqos.so* \
 "

@@ -19,6 +19,5 @@ do_install() {
      install -m 644 ${S}/src/* ${D}${libdir}/qt5/qml/Qt/labs/presentation/
 }
 
-#FILES:${PN}-dbg += "${datadir}/${P}/.debug"
 FILES:${PN} += "${datadir} \
 	        ${libdir}/*"
