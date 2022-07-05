@@ -1,6 +1,10 @@
 # meta-renesas
 
-This is a Yocto build layer(version:dunfell) that provides support for the RZ/G2 Group of 64bit Arm-based MPUs from Renesas Electronics.
+**This work is currently experimental. Do not use in production environments!**
+
+This is a Yocto build layer(version:kirkstone) that provides support for the
+RZ/G2 Group of 64bit Arm-based MPUs from Renesas Electronics.
+
 Currently the following boards and MPUs are supported:
 
 - Board: EK874 / MPU: R8A774C0 (RZ/G2E)
@@ -13,7 +17,8 @@ Currently the following boards and MPUs are supported:
 
 ## Patches
 
-To contribute to this layer you should email patches to renesas-rz@renesas.com. Please send .patch files as email attachments, not embedded in the email body.
+To contribute to this layer you should email patches to renesas-rz@renesas.com.
+Please send .patch files as email attachments, not embedded in the email body.
 
 ## Dependencies
 
@@ -45,12 +50,7 @@ Below git configuration is required:
     $ git config --global user.name "Your Name"
 ```
 
-Download proprietary graphics and multimedia drivers from Renesas, include:
-- proprietary_mmp.tar.gz
-- vspmfilter.tar.xz
-(Graphic drivers are required for Wayland. Multimedia drivers are optional)
-
-You can get all Yocto build environment from Renesas, or download all Yocto related public source to prepare the build environment as below.
+Prepare the build environment as below:
 ```bash
     $ git clone https://git.yoctoproject.org/git/poky
     $ cd poky
@@ -72,31 +72,32 @@ You can get all Yocto build environment from Renesas, or download all Yocto rela
     $ cd ..
 ```
 
-Initialize a build using the 'oe-init-build-env' script in Poky. e.g.:
+Initialize a build using the 'oe-init-build-env' script in Poky:
 ```bash
     $ source poky/oe-init-build-env
 ```
 
 Prepare default configuration files:
 ```bash
-    $ cp $WORK/meta-renesas/docs/template/conf/<board>/*.conf ./conf/
+    $ cp $WORK/meta-renesas/docs/template/conf/<machine>/*.conf ./conf/
 ```
-\<board\>: hihope-rzg2h, hihope-rzg2m, hihope-rzg2n, ek874, smarc-rzg2l,
+\<machine\>: hihope-rzg2h, hihope-rzg2m, hihope-rzg2n, ek874, smarc-rzg2l,
 smarc-rzg2lc, smarc-rzg2ul
 
 Build the target file system image using bitbake:
 ```bash
-    $ bitbake core-image-minimal
+    $ bitbake <image>
 ```
+\<image\>: core-image-minimal
 
-After completing the images for the target machine will be available in the output
-directory _'tmp/deploy/images/\<supported board name\>'_.
+After completing the images for the target machine will be available in the
+output directory _'tmp/deploy/images/\<supported board name\>'_.
 
 Images generated:
 * Image (generic Linux Kernel binary image file)
 * DTB for target machine
-* core-image-\<target\>-\<machine name\>.tar.bz2 (rootfs tar+bzip2)
-* core-image-\<target\>-\<machine name\>.ext4  (rootfs ext4 format)
+* \<image\>-\<machine\>.tar.bz2 (rootfs tar+bzip2)
+* \<image\>-\<machine\>.ext4  (rootfs ext4 format)
 
 ## Build Instructions for SDK
 
@@ -122,12 +123,15 @@ For 64-bit application use environment script in _/opt/poky/x.x_
 ## Build configs
 
 It is possible to change some build configs as below:
-* GPLv3: choose to not allow, or allow, GPLv3 packages
-  * **Non-GPLv3 (default):** not allow GPLv3 license. All recipes that has GPLv3 license will be downgrade to older version that has alternative license (done by meta-gplv2). In this setting customer can ignore the risk of strict license GPLv3
-  ```
-  INCOMPATIBLE_LICENSE = "GPL-3.0-only GPL-3.0-or-later"
-  ```
-  * Allow-GPLv3: allow GPLv3 license. If user is fine with strict copy-left license GPLv3, can use this setting to get newer software version.
-  ```
-  #INCOMPATIBLE_LICENSE = "GPL-3.0-only GPL-3.0-or-later"
-  ```
+### GPLv3
+Choose to not allow, or allow, GPLv3 packages
+
+By default GPLv3 licenses are not allowed. All recipes that have a GPLv3 license
+will be downgraded to older versions that have an alternative license if
+possible (provided by meta-gplv2).
+
+Users can enable the use of GPLv3 packages by removing the below line from the
+local.conf file:
+```
+- INCOMPATIBLE_LICENSE = "GPL-3.0-only GPL-3.0-or-later"
+```
