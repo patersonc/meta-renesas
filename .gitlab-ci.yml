@@ -9,6 +9,8 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     POKY_REV: 453be4d258f71855205f45599eea04589eb4a369
     OPENEMBEDDED_REV: 166ef8dbb14ad98b2094a77fcf352f6c63d5abf2
     GPLV2_REV: d2f8b5cdb285b72a4ed93450f6703ca27aa42e8a
+    VIRTUALIZATION_REV: 2fae71cdf0e8c6f398f51219bdf31eac76c662ec
+    EWAOL_REV: 26b2d08f70dcc0e046da8544c968064773c7cc45
     CONF_DIR: meta-renesas/docs/template/conf/${PLATFORM}
     DL_DIR: ${CI_PROJECT_DIR}/downloads
     SSTATE_DIR: ${CI_PROJECT_DIR}/sstate_cache
@@ -19,16 +21,23 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
   script:
     - git clone https://git.yoctoproject.org/git/poky
     - cd poky && git checkout ${POKY_REV} && cd -
-    - git clone https://github.com/openembedded/meta-openembedded
+    - git clone https://git.openembedded.org/meta-openembedded
     - cd meta-openembedded && git checkout ${OPENEMBEDDED_REV}  && cd -
     - git clone https://git.yoctoproject.org/git/meta-gplv2
     - cd meta-gplv2 && git checkout ${GPLV2_REV} && cd -
+    - git clone https://git.yoctoproject.org/git/meta-virtualization
+    - cd meta-virtualization && git checkout ${VIRTUALIZATION_REV} && cd -
+    - git clone https://git.gitlab.arm.com/ewaol/meta-ewaol.git
+    - cd meta-ewaol && git checkout ${EWAOL_REV} && cd -
     - git clone git@gitlab.renesas.solutions:spl2/civil-infrastructure-platform/meta-renesas.git
     - cd meta-renesas && git checkout ${CI_COMMIT_REF_NAME} && cd -
     - source poky/oe-init-build-env
     - cp ${CI_PROJECT_DIR}/build/${CONF_DIR}/*.conf conf/
     - if [ -z "${NO_CACHE+x}" ]; then echo "DL_DIR=\"${DL_DIR}\"" >> conf/local.conf; fi
     - if [ -z "${NO_CACHE+x}" ]; then echo "SSTATE_DIR=\"${SSTATE_DIR}\"" >> conf/local.conf; fi
+    - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then echo "DISTRO=\"ewaol\"" >> conf/local.conf; fi
+    - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then echo "DISTRO_FEATURES:append=\" ewaol-baremetal\"" >> conf/local.conf; fi
+    - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then bitbake-layers add-layer ../meta-ewaol/meta-ewaol-distro; fi
     - bitbake ${IMAGE}
   cache:
     - key: "downloads"
@@ -48,7 +57,9 @@ core:
   extends: .BSP-3.0.0-update2:kirkstone
   parallel:
     matrix:
-      - IMAGE: core-image-minimal
+      - IMAGE:
+          - core-image-minimal
+          - ewaol-baremetal-image
         PLATFORM:
           - hihope-rzg2m
           - smarc-rzg2l
@@ -59,7 +70,8 @@ extra:
   parallel:
     matrix:
       - IMAGE:
-        - core-image-minimal
+          - core-image-minimal
+          - ewaol-baremetal-image
         PLATFORM:
           - hihope-rzg2h
           - hihope-rzg2n
