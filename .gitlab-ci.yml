@@ -35,9 +35,10 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     - cp ${CI_PROJECT_DIR}/build/${CONF_DIR}/*.conf conf/
     - if [ -z "${NO_CACHE+x}" ]; then echo "DL_DIR=\"${DL_DIR}\"" >> conf/local.conf; fi
     - if [ -z "${NO_CACHE+x}" ]; then echo "SSTATE_DIR=\"${SSTATE_DIR}\"" >> conf/local.conf; fi
+    - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then bitbake-layers add-layer ../meta-ewaol/meta-ewaol-distro; fi
     - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then echo "DISTRO=\"ewaol\"" >> conf/local.conf; fi
     - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then echo "DISTRO_FEATURES:append=\" ewaol-baremetal\"" >> conf/local.conf; fi
-    - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then bitbake-layers add-layer ../meta-ewaol/meta-ewaol-distro; fi
+    - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then echo "INCOMPATIBLE_LICENSE:remove=\"GPL-3.0-only GPL-3.0-or-later\"" >> conf/local.conf; fi
     - bitbake ${IMAGE}
   cache:
     - key: "downloads"
