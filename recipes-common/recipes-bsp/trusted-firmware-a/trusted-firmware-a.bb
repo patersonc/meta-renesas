@@ -13,7 +13,7 @@ inherit deploy
 S = "${WORKDIR}/git"
 
 BRANCH = "v2.6/rz"
-BRANCH_mbedtls = "mbedtls-2.16"
+BRANCH_mbedtls = "archive/mbedtls-2.16"
 
 SRC_URI = " \
 	git://github.com/renesas-rz/rzg_trusted-firmware-a.git;branch=${BRANCH};protocol=https \
