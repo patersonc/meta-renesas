@@ -10,7 +10,7 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     OPENEMBEDDED_REV: 166ef8dbb14ad98b2094a77fcf352f6c63d5abf2
     GPLV2_REV: d2f8b5cdb285b72a4ed93450f6703ca27aa42e8a
     VIRTUALIZATION_REV: 2fae71cdf0e8c6f398f51219bdf31eac76c662ec
-    EWAOL_REV: 26b2d08f70dcc0e046da8544c968064773c7cc45
+    EWAOL_REV: 489b48b6325a2dcd9683686fb14d07f4fd29f934
     CONF_DIR: meta-renesas/docs/template/conf/${PLATFORM}
     DL_DIR: ${CI_PROJECT_DIR}/downloads
     SSTATE_DIR: ${CI_PROJECT_DIR}/sstate_cache
