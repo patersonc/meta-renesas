@@ -23,6 +23,7 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     - cd poky && git checkout ${POKY_REV} && cd -
     - git clone https://git.openembedded.org/meta-openembedded
     - cd meta-openembedded && git checkout ${OPENEMBEDDED_REV}  && cd -
+    - cd meta-openembedded && git cherry-pick 3a76ff41a 16f08eb5a && cd -
     - git clone https://git.yoctoproject.org/git/meta-gplv2
     - cd meta-gplv2 && git checkout ${GPLV2_REV} && cd -
     - git clone https://git.yoctoproject.org/git/meta-virtualization
