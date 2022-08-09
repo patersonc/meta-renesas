@@ -40,6 +40,8 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then echo "DISTRO=\"ewaol\"" >> conf/local.conf; fi
     - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then echo "DISTRO_FEATURES:append=\" ewaol-baremetal\"" >> conf/local.conf; fi
     - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then echo "INCOMPATIBLE_LICENSE:remove=\"GPL-3.0-only GPL-3.0-or-later\"" >> conf/local.conf; fi
+    - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then echo "MACHINE_FEATURES:append=\" docker\"" >> conf/local.conf; fi
+    - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then echo "CONTAINERS_CONFIG_FILE_MD5=\"a371e6a60c50f1e2b80806e0601090d6\"" >> conf/local.conf; fi
     - bitbake ${IMAGE}
   cache:
     - key: "downloads"
