@@ -21,6 +21,7 @@ PR = "r1"
 
 SRC_URI:append = "\
   ${@oe.utils.conditional("USE_DOCKER", "1", " file://docker.cfg ", "", d)} \
+  file://kubernetes.cfg \
   file://touch.cfg \
 "
 
