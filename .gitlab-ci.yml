@@ -11,6 +11,7 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     GPLV2_REV: d2f8b5cdb285b72a4ed93450f6703ca27aa42e8a
     VIRTUALIZATION_REV: 2fae71cdf0e8c6f398f51219bdf31eac76c662ec
     EWAOL_REV: 489b48b6325a2dcd9683686fb14d07f4fd29f934
+    ARM_REV: fc09cc0e8db287600625e64905170a6de24f2686
     CONF_DIR: meta-renesas/docs/template/conf/${PLATFORM}
     DL_DIR: ${CI_PROJECT_DIR}/downloads
     SSTATE_DIR: ${CI_PROJECT_DIR}/sstate_cache
@@ -30,18 +31,24 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     - cd meta-virtualization && git checkout ${VIRTUALIZATION_REV} && cd -
     - git clone https://git.gitlab.arm.com/ewaol/meta-ewaol.git
     - cd meta-ewaol && git checkout ${EWAOL_REV} && cd -
+    - git clone https://git.yoctoproject.org/git/meta-arm
+    - cd meta-arm && git checkout ${ARM_REV} && cd -
     - git clone git@gitlab.renesas.solutions:spl2/civil-infrastructure-platform/meta-renesas.git
     - cd meta-renesas && git checkout ${CI_COMMIT_REF_NAME} && cd -
     - source poky/oe-init-build-env
     - cp ${CI_PROJECT_DIR}/build/${CONF_DIR}/*.conf conf/
     - if [ -z "${NO_CACHE+x}" ]; then echo "DL_DIR=\"${DL_DIR}\"" >> conf/local.conf; fi
     - if [ -z "${NO_CACHE+x}" ]; then echo "SSTATE_DIR=\"${SSTATE_DIR}\"" >> conf/local.conf; fi
-    - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then bitbake-layers add-layer ../meta-ewaol/meta-ewaol-distro; fi
-    - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then echo "DISTRO=\"ewaol\"" >> conf/local.conf; fi
-    - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then echo "DISTRO_FEATURES:append=\" ewaol-baremetal\"" >> conf/local.conf; fi
-    - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then echo "INCOMPATIBLE_LICENSE:remove=\"GPL-3.0-only GPL-3.0-or-later\"" >> conf/local.conf; fi
-    - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then echo "MACHINE_FEATURES:append=\" docker\"" >> conf/local.conf; fi
-    - if [ "${IMAGE}" == "ewaol-baremetal-image" ]; then echo "CONTAINERS_CONFIG_FILE_MD5=\"a371e6a60c50f1e2b80806e0601090d6\"" >> conf/local.conf; fi
+    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then bitbake-layers add-layer ../meta-ewaol/meta-ewaol-distro; fi
+    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then bitbake-layers add-layer ../meta-ewaol/meta-ewaol-tests; fi
+    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then bitbake-layers add-layer ../meta-arm/meta-arm-toolchain; fi
+    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then bitbake-layers add-layer ../meta-arm/meta-arm; fi
+    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then echo "DISTRO=\"ewaol\"" >> conf/local.conf; fi
+    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then echo "DISTRO_FEATURES:append=\" ewaol-baremetal\"" >> conf/local.conf; fi
+    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then echo "DISTRO_FEATURES:append=\" ewaol-test\"" >> conf/local.conf; fi
+    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then echo "INCOMPATIBLE_LICENSE:remove=\"GPL-3.0-only GPL-3.0-or-later\"" >> conf/local.conf; fi
+    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then echo "MACHINE_FEATURES:append=\" docker\"" >> conf/local.conf; fi
+    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then echo "CONTAINERS_CONFIG_FILE_MD5=\"a371e6a60c50f1e2b80806e0601090d6\"" >> conf/local.conf; fi
     - bitbake ${IMAGE}
   cache:
     - key: "downloads"
