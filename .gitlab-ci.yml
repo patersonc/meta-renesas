@@ -72,6 +72,14 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     - bitbake-layers add-layer ../meta-arm/meta-arm
     - echo "DISTRO_FEATURES:append=\" ewaol-test\"" >> conf/local.conf
 
+.ewaol-sdk:
+  extends: .ewaol-base
+  script:
+    - !reference [.ewaol-base, script]
+    - bitbake-layers add-layer ../meta-arm/meta-arm-toolchain
+    - bitbake-layers add-layer ../meta-arm/meta-arm
+    - echo "DISTRO_FEATURES:append=\" ewaol-sdk\"" >> conf/local.conf
+
 ewaol-baremetal-image:
   extends: .ewaol-base
   variables:
@@ -121,6 +129,36 @@ ewaol-baremetal-image:validation:all:
     IMAGE: ewaol-baremetal-image
   script:
     - !reference [.ewaol-test, script]
+    - bitbake ${IMAGE}
+  parallel:
+    matrix:
+      - PLATFORM:
+          - hihope-rzg2h
+          - hihope-rzg2n
+          - ek874
+          - smarc-rzg2lc
+          - smarc-rzg2ul
+  when: manual
+
+ewaol-baremetal-image:sdk:
+  extends: .ewaol-sdk
+  variables:
+    IMAGE: ewaol-baremetal-sdk-image
+  script:
+    - !reference [.ewaol-sdk, script]
+    - bitbake ${IMAGE}
+  parallel:
+    matrix:
+      - PLATFORM:
+          - hihope-rzg2m
+          - smarc-rzg2l
+
+ewaol-baremetal-image:sdk:all:
+  extends: .ewaol-sdk
+  variables:
+    IMAGE: ewaol-baremetal-sdk-image
+  script:
+    - !reference [.ewaol-sdk, script]
     - bitbake ${IMAGE}
   parallel:
     matrix:
