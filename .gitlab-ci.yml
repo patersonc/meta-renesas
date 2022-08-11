@@ -19,7 +19,6 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     - export
     - rm -rf build && sync
     - mkdir build && cd build
-  script:
     - git clone https://git.yoctoproject.org/git/poky
     - cd poky && git checkout ${POKY_REV} && cd -
     - git clone https://git.openembedded.org/meta-openembedded
@@ -39,17 +38,6 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     - cp ${CI_PROJECT_DIR}/build/${CONF_DIR}/*.conf conf/
     - if [ -z "${NO_CACHE+x}" ]; then echo "DL_DIR=\"${DL_DIR}\"" >> conf/local.conf; fi
     - if [ -z "${NO_CACHE+x}" ]; then echo "SSTATE_DIR=\"${SSTATE_DIR}\"" >> conf/local.conf; fi
-    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then bitbake-layers add-layer ../meta-ewaol/meta-ewaol-distro; fi
-    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then bitbake-layers add-layer ../meta-ewaol/meta-ewaol-tests; fi
-    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then bitbake-layers add-layer ../meta-arm/meta-arm-toolchain; fi
-    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then bitbake-layers add-layer ../meta-arm/meta-arm; fi
-    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then echo "DISTRO=\"ewaol\"" >> conf/local.conf; fi
-    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then echo "DISTRO_FEATURES:append=\" ewaol-baremetal\"" >> conf/local.conf; fi
-    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then echo "DISTRO_FEATURES:append=\" ewaol-test\"" >> conf/local.conf; fi
-    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then echo "INCOMPATIBLE_LICENSE:remove=\"GPL-3.0-only GPL-3.0-or-later\"" >> conf/local.conf; fi
-    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then echo "MACHINE_FEATURES:append=\" docker\"" >> conf/local.conf; fi
-    - if [ "${IMAGE}" = "ewaol-baremetal-image" ]; then echo "CONTAINERS_CONFIG_FILE_MD5=\"a371e6a60c50f1e2b80806e0601090d6\"" >> conf/local.conf; fi
-    - bitbake ${IMAGE}
   cache:
     - key: "downloads"
       paths:
@@ -62,30 +50,102 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     paths:
       - build/build/conf/
       - build/build/tmp/deploy/images/
+      - build/build/tmp/deploy/licenses/
     when: always
 
-core:
+.ewaol-base:
   extends: .BSP-3.0.0:kirkstone
+  script:
+    - bitbake-layers add-layer ../meta-ewaol/meta-ewaol-distro
+    - echo "DISTRO=\"ewaol\"" >> conf/local.conf
+    - echo "DISTRO_FEATURES:append=\" ewaol-baremetal\"" >> conf/local.conf
+    - echo "INCOMPATIBLE_LICENSE:remove=\"GPL-3.0-only GPL-3.0-or-later\"" >> conf/local.conf
+    - echo "MACHINE_FEATURES:append=\" docker\"" >> conf/local.conf
+    - echo "CONTAINERS_CONFIG_FILE_MD5=\"a371e6a60c50f1e2b80806e0601090d6\"" >> conf/local.conf
+
+.ewaol-test:
+  extends: .ewaol-base
+  script:
+    - !reference [.ewaol-base, script]
+    - bitbake-layers add-layer ../meta-ewaol/meta-ewaol-tests
+    - bitbake-layers add-layer ../meta-arm/meta-arm-toolchain
+    - bitbake-layers add-layer ../meta-arm/meta-arm
+    - echo "DISTRO_FEATURES:append=\" ewaol-test\"" >> conf/local.conf
+
+ewaol-baremetal-image:
+  extends: .ewaol-base
+  variables:
+    IMAGE: ewaol-baremetal-image
+  script:
+    - !reference [.ewaol-base, script]
+    - bitbake ${IMAGE}
   parallel:
     matrix:
-      - IMAGE:
-          - core-image-minimal
-          - ewaol-baremetal-image
-        PLATFORM:
+      - PLATFORM:
           - hihope-rzg2m
           - smarc-rzg2l
 
-extra:
-  extends: .BSP-3.0.0:kirkstone
-  when: manual
+ewaol-baremetal-image:validation:
+  extends: .ewaol-test
+  variables:
+    IMAGE: ewaol-baremetal-image
+  script:
+    - !reference [.ewaol-test, script]
+    - bitbake ${IMAGE}
   parallel:
     matrix:
-      - IMAGE:
-          - core-image-minimal
-          - ewaol-baremetal-image
-        PLATFORM:
+      - PLATFORM:
+          - hihope-rzg2m
+          - smarc-rzg2l
+
+ewaol-baremetal-image:all:
+  extends: .ewaol-base
+  variables:
+    IMAGE: ewaol-baremetal-image
+  script:
+    - !reference [.ewaol-base, script]
+    - bitbake ${IMAGE}
+  parallel:
+    matrix:
+      - PLATFORM:
           - hihope-rzg2h
           - hihope-rzg2n
           - ek874
           - smarc-rzg2lc
           - smarc-rzg2ul
+  when: manual
+
+ewaol-baremetal-image:validation:all:
+  extends: .ewaol-test
+  variables:
+    IMAGE: ewaol-baremetal-image
+  script:
+    - !reference [.ewaol-test, script]
+    - bitbake ${IMAGE}
+  parallel:
+    matrix:
+      - PLATFORM:
+          - hihope-rzg2h
+          - hihope-rzg2n
+          - ek874
+          - smarc-rzg2lc
+          - smarc-rzg2ul
+  when: manual
+
+BSP-3.0.0:kirkstone:
+  extends: .BSP-3.0.0:kirkstone
+  variables:
+    IMAGE: core-image-minimal
+  script:
+    - bitbake ${IMAGE}
+  parallel:
+    matrix:
+      - PLATFORM:
+          - hihope-rzg2h
+          - hihope-rzg2m
+          - hihope-rzg2n
+          - ek874
+          - smarc-rzg2l
+          - smarc-rzg2lc
+          - smarc-rzg2ul
+  when: manual
