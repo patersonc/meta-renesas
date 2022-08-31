@@ -62,6 +62,10 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     - echo "INCOMPATIBLE_LICENSE:remove=\"GPL-3.0-only GPL-3.0-or-later\"" >> conf/local.conf
     - echo "MACHINE_FEATURES:append=\" docker\"" >> conf/local.conf
     - echo "CONTAINERS_CONFIG_FILE_MD5=\"a371e6a60c50f1e2b80806e0601090d6\"" >> conf/local.conf
+    - echo "PACKAGECONFIG:remove:pn-qemu-system-native=\"gtk+ sdl\"" >> conf/local.conf
+    - echo "EWAOL_ROOTFS_EXTRA_SPACE=\"2000000\"" >> conf/local.conf
+    - echo "EWAOL_GENERIC_ARM64_FILESYSTEM=\"1\"" >> conf/local.conf
+    - echo "EWAOL_GENERIC_ARM64_DEFAULTTUNE=\"armv8a-crc\"" >> conf/local.conf
 
 .ewaol-test:
   extends: .ewaol-base
