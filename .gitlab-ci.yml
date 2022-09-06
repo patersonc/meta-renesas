@@ -38,6 +38,10 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     - cp ${CI_PROJECT_DIR}/build/${CONF_DIR}/*.conf conf/
     - if [ -z "${NO_CACHE+x}" ]; then echo "DL_DIR=\"${DL_DIR}\"" >> conf/local.conf; fi
     - if [ -z "${NO_CACHE+x}" ]; then echo "SSTATE_DIR=\"${SSTATE_DIR}\"" >> conf/local.conf; fi
+    - echo "IMAGE_FSTYPES:append=\" wic.gz\"" >> conf/local.conf
+    - echo "WKS_FILE=\"sdimage-rootfs.wks\"" >> conf/local.conf
+    - echo "KERNEL_ALT_IMAGETYPE:append=\" Image.gz\"" >> conf/local.conf
+    - echo "IMAGE_INSTALL:append=\" kernel-devicetree\"" >> conf/local.conf
   cache:
     - key: "downloads"
       paths:
