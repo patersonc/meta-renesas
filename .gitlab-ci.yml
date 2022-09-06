@@ -68,18 +68,14 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     - echo "EWAOL_GENERIC_ARM64_DEFAULTTUNE=\"armv8a-crc\"" >> conf/local.conf
 
 .ewaol-test:
-  extends: .ewaol-base
   script:
-    - !reference [.ewaol-base, script]
     - bitbake-layers add-layer ../meta-ewaol/meta-ewaol-tests
     - bitbake-layers add-layer ../meta-arm/meta-arm-toolchain
     - bitbake-layers add-layer ../meta-arm/meta-arm
     - echo "DISTRO_FEATURES:append=\" ewaol-test\"" >> conf/local.conf
 
 .ewaol-sdk:
-  extends: .ewaol-base
   script:
-    - !reference [.ewaol-base, script]
     - bitbake-layers add-layer ../meta-arm/meta-arm-toolchain
     - bitbake-layers add-layer ../meta-arm/meta-arm
     - echo "DISTRO_FEATURES:append=\" ewaol-sdk\"" >> conf/local.conf
@@ -96,12 +92,14 @@ ewaol-baremetal-image:
       - PLATFORM:
           - hihope-rzg2m
           - smarc-rzg2l
+  when: manual
 
 ewaol-baremetal-image:validation:
-  extends: .ewaol-test
+  extends: [.ewaol-base, .ewaol-test]
   variables:
     IMAGE: ewaol-baremetal-image
   script:
+    - !reference [.ewaol-base, script]
     - !reference [.ewaol-test, script]
     - bitbake ${IMAGE}
   parallel:
@@ -128,10 +126,11 @@ ewaol-baremetal-image:all:
   when: manual
 
 ewaol-baremetal-image:validation:all:
-  extends: .ewaol-test
+  extends: [.ewaol-base, .ewaol-test]
   variables:
     IMAGE: ewaol-baremetal-image
   script:
+    - !reference [.ewaol-base, script]
     - !reference [.ewaol-test, script]
     - bitbake ${IMAGE}
   parallel:
@@ -145,10 +144,27 @@ ewaol-baremetal-image:validation:all:
   when: manual
 
 ewaol-baremetal-image:sdk:
-  extends: .ewaol-sdk
+  extends: [.ewaol-base, .ewaol-sdk]
   variables:
     IMAGE: ewaol-baremetal-sdk-image
   script:
+    - !reference [.ewaol-base, script]
+    - !reference [.ewaol-sdk, script]
+    - bitbake ${IMAGE}
+  parallel:
+    matrix:
+      - PLATFORM:
+          - hihope-rzg2m
+          - smarc-rzg2l
+  when: manual
+
+ewaol-baremetal-image:validation:sdk:
+  extends: [.ewaol-base, .ewaol-test, .ewaol-sdk]
+  variables:
+    IMAGE: ewaol-baremetal-sdk-image
+  script:
+    - !reference [.ewaol-base, script]
+    - !reference [.ewaol-test, script]
     - !reference [.ewaol-sdk, script]
     - bitbake ${IMAGE}
   parallel:
@@ -158,10 +174,30 @@ ewaol-baremetal-image:sdk:
           - smarc-rzg2l
 
 ewaol-baremetal-image:sdk:all:
-  extends: .ewaol-sdk
+  extends: [.ewaol-base, .ewaol-sdk]
   variables:
     IMAGE: ewaol-baremetal-sdk-image
   script:
+    - !reference [.ewaol-base, script]
+    - !reference [.ewaol-sdk, script]
+    - bitbake ${IMAGE}
+  parallel:
+    matrix:
+      - PLATFORM:
+          - hihope-rzg2h
+          - hihope-rzg2n
+          - ek874
+          - smarc-rzg2lc
+          - smarc-rzg2ul
+  when: manual
+
+ewaol-baremetal-image:validation:sdk:all:
+  extends: [.ewaol-base, .ewaol-test, .ewaol-sdk]
+  variables:
+    IMAGE: ewaol-baremetal-sdk-image
+  script:
+    - !reference [.ewaol-base, script]
+    - !reference [.ewaol-test, script]
     - !reference [.ewaol-sdk, script]
     - bitbake ${IMAGE}
   parallel:
