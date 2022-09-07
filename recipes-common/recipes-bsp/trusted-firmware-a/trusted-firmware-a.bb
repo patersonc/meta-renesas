@@ -20,13 +20,13 @@ SRC_URI = " \
 	git://github.com/Mbed-TLS/mbedtls.git;branch=${BRANCH_mbedtls};name=mbedtls;destsuffix=mbedtls;protocol=https \
 "
 
-SRCREV = "aed3786384b99dc13a46a8d3af139df28b5642a3"
+SRCREV = "7e8696ff46bef1094f3efee46dc830589e6d0f0e"
 SRCREV_mbedtls = "04a049bda1ceca48060b57bc4bcf5203ce591421"
 
 PV = "v2.6+git"
 
 COMPATIBLE_MACHINE:rzg2h = "(ek874|hihope-rzg2m|hihope-rzg2n|hihope-rzg2h)"
-COMPATIBLE_MACHINE:rzg2l = "(smarc-rzg2l|smarc-rzg2lc|smarc-rzg2ul)"
+COMPATIBLE_MACHINE:rzg2l = "(smarc-rzg2l|smarc-rzg2lc|smarc-rzg2ul|smarc-rzv2l|rzv2l-dev)"
 
 PLATFORM ?= "rzg"
 
@@ -46,6 +46,17 @@ PLATFORM:smarc-rzg2ul = "g2ul"
 EXTRA_FLAGS:smarc-rzg2ul = "BOARD=g2ul_smarc SOC_TYPE=1 SPI_FLASH=AT25QL128A"
 FLASH_ADDRESS_BL2_BP:smarc-rzg2ul = "00000"
 FLASH_ADDRESS_FIP:smarc-rzg2ul = "1D200"
+
+PLATFORM:smarc-rzv2l = "v2l"
+EXTRA_FLAGS:smarc-rzv2l = "BOARD=smarc_4"
+PMIC_EXTRA_FLAGS:smarc-rzv2l = "BOARD=smarc_pmic_2"
+FLASH_ADDRESS_BL2_BP:smarc-rzv2l = "00000"
+FLASH_ADDRESS_FIP:smarc-rzv2l = "1D200"
+
+PLATFORM:rzv2l-dev = "v2l"
+EXTRA_FLAGS:rzv2l-dev = "BOARD=dev15_4"
+FLASH_ADDRESS_BL2_BP:rzv2l-dev = "00000"
+FLASH_ADDRESS_FIP:rzv2l-dev = "1D200"
 
 PMIC_BUILD_DIR = "${S}/build_pmic"
 

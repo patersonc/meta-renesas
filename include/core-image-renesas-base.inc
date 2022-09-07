@@ -18,12 +18,9 @@ IMAGE_INSTALL:append = " \
     packagegroup-multimedia-kernel-modules \
 "
 
-IMAGE_FEATURES:remove = " ssh-server-dropbear"
-IMAGE_FEATURES:append = " ssh-server-openssh"
-
 update_issue() {
     # Set BSP version
-    BSP_VERSION="3.0.0"
+    BSP_VERSION="3.0.0-update1"
 
     # Set SoC and Board info
     case "${MACHINE}" in
@@ -38,6 +35,14 @@ update_issue() {
     smarc-rzg2ul)
       BSP_SOC="RZG2UL"
       BSP_BOARD="RZG2UL-SMARC-EVK"
+      ;;
+    smarc-rzv2l)
+      BSP_SOC="RZV2L"
+      BSP_BOARD="RZV2L-SMARC-EVK"
+      ;;
+    rzv2l-dev)
+      BSP_SOC="RZV2L"
+      BSP_BOARD="RZV2L-DEV"
       ;;
     hihope-rzg2h)
       BSP_SOC="RZG2H"

@@ -11,14 +11,15 @@ Currently the following boards and MPUs are supported:
 - Board: HIHOPE-RZG2M / MPU: R8A774A1 (RZ/G2M v1.3) and R8A774A3 (RZ/G2M v3.0)
 - Board: HIHOPE-RZG2N / MPU: R8A774B1 (RZG2N)
 - Board: HIHOPE-RZG2H / MPU: R8A774E1 (RZG2H)
-- Board: RZG2L SMARC Evaluation Kit / MPU: R9A77G044L (RZ/G2L)
-- Board: RZG2LC SMARC Evaluation Kit / MPU: R9A77G044C (RZ/G2LC)
-- Board: RZG2UL SMARC Evaluation Kit / MPU: R9A77G043U (RZ/G2UL)
+- Board: RZG2L SMARC Evaluation Kit / MPU: R9A07G044L (RZ/G2L)
+- Board: RZG2LC SMARC Evaluation Kit / MPU: R9A07G044C (RZ/G2LC)
+- Board: RZG2UL SMARC Evaluation Kit / MPU: R9A07G043U (RZ/G2UL)
+- Board: RZV2L SMARC Evaluation Kit / MPU: R9A07G054L (RZ/V2L)
+- Board: RZV2L Development Evaluation Kit / MPU: R9A07G054L (RZ/V2L)
 
 ## Patches
 
-To contribute to this layer you should email patches to renesas-rz@renesas.com.
-Please send .patch files as email attachments, not embedded in the email body.
+To contribute to this layer you should email patches to renesas-rz@renesas.com. Please send .patch files as email attachments, not embedded in the email body.
 
 ## Dependencies
 
@@ -68,7 +69,7 @@ Prepare the build environment as below:
     $
     $ git clone  https://github.com/renesas-rz/meta-renesas.git
     $ cd meta-renesas
-    $ git checkout kirkstone/BSP-3.0.0
+    $ git checkout kirkstone/BSP-3.0.0-update1
     $ cd ..
 ```
 
@@ -81,8 +82,15 @@ Prepare default configuration files:
 ```bash
     $ cp $WORK/meta-renesas/docs/template/conf/<machine>/*.conf ./conf/
 ```
-\<machine\>: hihope-rzg2h, hihope-rzg2m, hihope-rzg2n, ek874, smarc-rzg2l,
-smarc-rzg2lc, smarc-rzg2ul
+\<machine\>: can be selected from any of the below:
+* RZ/G2H:  hihope-rzg2h
+* RZ/G2M:  hihope-rzg2m
+* RZ/G2N:  hihope-rzg2n
+* RZ/G2E:  ek874
+* RZ/G2L:  smarc-rzg2l
+* RZ/G2LC: smarc-rzg2lc
+* RZ/G2UL: smarc-rzg2ul
+* RZ/V2L:  smarc-rzv2l, rzv2l-dev
 
 Build the target file system image using bitbake:
 ```bash
