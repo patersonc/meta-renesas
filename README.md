@@ -69,7 +69,7 @@ Prepare the build environment as below:
     $
     $ git clone  https://github.com/renesas-rz/meta-renesas.git
     $ cd meta-renesas
-    $ git checkout kirkstone/BSP-3.0.0-update1
+    $ git checkout kirkstone/BSP-3.0.0-update2
     $ cd ..
 ```
 

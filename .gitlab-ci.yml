@@ -1,6 +1,6 @@
 image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubuntu-20.04-latest
 
-.BSP-3.0.0-update1:kirkstone:
+.BSP-3.0.0-update2:kirkstone:
   stage: build
   tags:
     - yocto
@@ -45,7 +45,7 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     when: always
 
 core:
-  extends: .BSP-3.0.0-update1:kirkstone
+  extends: .BSP-3.0.0-update2:kirkstone
   parallel:
     matrix:
       - IMAGE: core-image-minimal
@@ -54,7 +54,7 @@ core:
           - smarc-rzg2l
 
 extra:
-  extends: .BSP-3.0.0-update1:kirkstone
+  extends: .BSP-3.0.0-update2:kirkstone
   when: manual
   parallel:
     matrix:

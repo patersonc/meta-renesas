@@ -22,7 +22,7 @@ do_compile:append() {
 
 		python3 ${MANIFEST_GENERATION_KCERT} -info ${DIRPATH_MANIFEST_GENTOOL}/info/bl31_${IMG_AUTH_MODE}_info.xml \
 			-iskey ${SYMLINK_NATIVE_BOOT_KEY_DIR}/bl31_key.pem -certout ${S}/build/${PLATFORM}/release/bl31-kcert.bin
-		
+
 		python3 ${MANIFEST_GENERATION_CCERT} -info ${DIRPATH_MANIFEST_GENTOOL}/info/bl31_${IMG_AUTH_MODE}_info.xml \
 			-iskey ${SYMLINK_NATIVE_BOOT_KEY_DIR}/bl31_key.pem -imgin ${S}/build/${PLATFORM}/release/bl31.bin \
 			-certout ${S}/build/${PLATFORM}/release/bl31-ccert.bin -imgout ${S}/build/${PLATFORM}/release/bl31_tbb.bin
@@ -37,7 +37,7 @@ do_compile:append() {
 
 			python3 ${MANIFEST_GENERATION_KCERT} -info ${DIRPATH_MANIFEST_GENTOOL}/info/bl31_${IMG_AUTH_MODE}_info.xml \
 				-iskey ${SYMLINK_NATIVE_BOOT_KEY_DIR}/bl31_key.pem -certout ${PMIC_BUILD_DIR}/bl31-kcert_pmic.bin
-			
+
 			python3 ${MANIFEST_GENERATION_CCERT} -info ${DIRPATH_MANIFEST_GENTOOL}/info/bl31_${IMG_AUTH_MODE}_info.xml \
 				-iskey ${SYMLINK_NATIVE_BOOT_KEY_DIR}/bl31_key.pem -imgin ${PMIC_BUILD_DIR}/bl31.bin \
 				-certout ${PMIC_BUILD_DIR}/bl31-ccert_pmic.bin -imgout ${PMIC_BUILD_DIR}/bl31_pmic_tbb.bin
@@ -69,8 +69,8 @@ do_install:append () {
 	fi
 }
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
-SRC_URI_append = " \
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+SRC_URI:append = " \
 	file://0001-Added-code-to-explicitly-initialize-the-divider-of-P.patch \
 	file://0002-USB-2.0-Phy-workaround-for-RZ-G2L-LC.patch \
 "
