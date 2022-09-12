@@ -65,7 +65,8 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     - echo "DISTRO_FEATURES:append=\" ewaol-baremetal\"" >> conf/local.conf
     - echo "INCOMPATIBLE_LICENSE:remove=\"GPL-3.0-only GPL-3.0-or-later\"" >> conf/local.conf
     - echo "MACHINE_FEATURES:append=\" docker\"" >> conf/local.conf
-    - echo "CONTAINERS_CONFIG_FILE_MD5=\"a371e6a60c50f1e2b80806e0601090d6\"" >> conf/local.conf
+    - echo "CONTAINERS_CONFIG_FILE_MD5=\"066dad66874710b95ca625e163252f0a\"" >> conf/local.conf
+    - echo "K3S_CONFIG_FILE_MD5=\"f0925de782533b9cf6969980c257f56a\"" >> conf/local.conf
     - echo "PACKAGECONFIG:remove:pn-qemu-system-native=\"gtk+ sdl\"" >> conf/local.conf
     - echo "EWAOL_ROOTFS_EXTRA_SPACE=\"2000000\"" >> conf/local.conf
     - echo "EWAOL_GENERIC_ARM64_FILESYSTEM=\"0\"" >> conf/local.conf
