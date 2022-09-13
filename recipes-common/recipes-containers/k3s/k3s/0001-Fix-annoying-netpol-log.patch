@@ -1,0 +1,28 @@
+From 2d0cdfbdeeb8cd497353b74a8a36454bcb9c9d6c Mon Sep 17 00:00:00 2001
+From: Manuel Buil <mbuil@suse.com>
+Date: Thu, 10 Feb 2022 19:53:36 +0100
+Subject: [PATCH] Fix annoying netpol log
+
+Signed-off-by: Manuel Buil <mbuil@suse.com>
+---
+ pkg/agent/netpol/netpol.go | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/pkg/agent/netpol/netpol.go b/pkg/agent/netpol/netpol.go
+index fdd7b297139a..6df0e727ceb3 100644
+--- a/pkg/agent/netpol/netpol.go
++++ b/pkg/agent/netpol/netpol.go
+@@ -76,6 +76,10 @@ func Run(ctx context.Context, nodeConfig *config.Node) error {
+ 	if err != nil {
+ 		return err
+ 	}
++
++	// Initialize all healthcheck timers. Otherwise, the system reports incorrect heartbeat missing messages
++	hc.SetAlive()
++
+ 	wg.Add(1)
+ 	go hc.RunCheck(healthCh, stopCh, &wg)
+ 
+-- 
+2.37.1
+
