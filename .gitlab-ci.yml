@@ -41,7 +41,7 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     - echo "IMAGE_FSTYPES:append=\" wic.gz\"" >> conf/local.conf
     - echo "WKS_FILE=\"sdimage-rootfs.wks\"" >> conf/local.conf
     - echo "KERNEL_ALT_IMAGETYPE:append=\" Image.gz\"" >> conf/local.conf
-    - echo "IMAGE_INSTALL:append=\" kernel-devicetree\"" >> conf/local.conf
+    - echo "IMAGE_INSTALL:append=\" kernel-devicetree htop\"" >> conf/local.conf
   cache:
     - key: "downloads"
       paths:
