@@ -1,5 +1,8 @@
 # meta-renesas
 
+This branch ports meta-ewaol support on top of the Renesas RZ/G v3.0.0-update2
+BSP.
+
 **This work is currently experimental. Do not use in production environments!**
 
 This is a Yocto build layer(version:kirkstone) that provides support for the
@@ -25,22 +28,40 @@ To contribute to this layer you should email patches to renesas-rz@renesas.com. 
 
 This layer depends on:
 
-    URI: git://git.yoctoproject.org/poky
+    URI: https://git.yoctoproject.org/git/poky
     layers: meta, meta-poky, meta-yocto-bsp
     branch: kirkstone
     revision: 453be4d258f71855205f45599eea04589eb4a369
 
-    URI: git://git.openembedded.org/meta-openembedded
+    URI: https://git.openembedded.org/meta-openembedded
     layers: meta-oe, meta-python, meta-multimedia
     branch: kirkstone
     revision: 166ef8dbb14ad98b2094a77fcf352f6c63d5abf2
 
-    URI: http://git.yoctoproject.org/cgit.cgi/meta-gplv2/
+    URI: https://git.yoctoproject.org/git/meta-gplv2
     layers: meta-gplv2
     branch: kirkstone
     revision: d2f8b5cdb285b72a4ed93450f6703ca27aa42e8a
 
+    URI: https://git.yoctoproject.org/git/meta-virtualization
+    layers: meta-virtualization
+    branch: kirkstone
+    revision: 2fae71cdf0e8c6f398f51219bdf31eac76c662ec
+
+    URI: https://git.yoctoproject.org/git/meta-arm
+    layers: meta-arm, meta-arm-bsp, meta-arm-toolchain
+    branch: kirkstone
+    revision: fc09cc0e8db287600625e64905170a6de24f2686
+
+    URI: https://git.gitlab.arm.com/ewaol/meta-ewaol.git
+    layers: meta-ewaol-distro, meta-ewaol-tests
+    branch: kirkstone
+    revision: 26b2d08f70dcc0e046da8544c968064773c7cc45
+
 ## Build Instructions
+
+The *.gitlab-ci.yml* file shows the exact commands used to build the BSP.\
+Detailed instrcutions can be found below.
 
 Assume that $WORK is the current working directory.
 The following instructions require a Poky installation (or equivalent).
@@ -61,22 +82,40 @@ Prepare the build environment as below:
     $ git clone https://github.com/openembedded/meta-openembedded
     $ cd meta-openembedded
     $ git checkout 166ef8dbb14ad98b2094a77fcf352f6c63d5abf2
+    $ git cherry-pick 3a76ff41a 16f08eb5a
     $ cd ..
     $
     $ git clone https://git.yoctoproject.org/git/meta-gplv2
     $ cd meta-gplv2
     $ git checkout d2f8b5cdb285b72a4ed93450f6703ca27aa42e8a
+    $ cd ..
     $
-    $ git clone  https://github.com/renesas-rz/meta-renesas.git
+    $ git clone https://github.com/patersonc/meta-renesas.git
     $ cd meta-renesas
-    $ git checkout kirkstone/BSP-3.0.0-update2
+    $ git checkout patersonc/kirkstone/BSP-3.0.0-update2/ewaol-dev
+    $ cd ..
+    $
+    $ git clone https://git.yoctoproject.org/git/meta-virtualization
+    $ cd meta-virtualization
+    $ git checkout 2fae71cdf0e8c6f398f51219bdf31eac76c662ec
+    $ cd ..
+    $
+    $ git clone https://git.yoctoproject.org/git/meta-arm
+    $ cd meta-arm
+    $ git checkout fc09cc0e8db287600625e64905170a6de24f2686
+    $ cd ..
+    $
+    $ git clone https://git.gitlab.arm.com/ewaol/meta-ewaol.git
+    $ cd meta-ewaol
+    $ git checkout 26b2d08f70dcc0e046da8544c968064773c7cc45
     $ cd ..
 ```
 
-Initialize a build using the 'oe-init-build-env' script in Poky:
+Initialize a build using the *oe-init-build-env* script in Poky:
 ```bash
     $ source poky/oe-init-build-env
 ```
+You will now be inside the *build* directory.
 
 Prepare default configuration files:
 ```bash
@@ -92,20 +131,62 @@ Prepare default configuration files:
 * RZ/G2UL: smarc-rzg2ul
 * RZ/V2L:  smarc-rzv2l, rzv2l-dev
 
+The above configuration templates are for the standard RZ/G BSP.
+
+To add meta-ewaol support we need to add some extra configruation steps.
+
+First, add the layers we need to the *bblayers.conf* file:
+```
+    $ bitbake-layers add-layer ../meta-ewaol/meta-ewaol-distro
+    $ bitbake-layers add-layer ../meta-ewaol/meta-ewaol-tests
+    $ bitbake-layers add-layer ../meta-arm/meta-arm-toolchain
+    $ bitbake-layers add-layer ../meta-arm/meta-arm
+```
+
+Next, add the required configuration to the *local.conf* file:
+```
+    $ echo "IMAGE_FSTYPES:append=\" wic.gz\"" >> conf/local.conf
+    $ echo "WKS_FILE=\"sdimage-rootfs.wks\"" >> conf/local.conf
+    $ echo "KERNEL_ALT_IMAGETYPE:append=\" Image.gz\"" >> conf/local.conf
+    $ echo "IMAGE_INSTALL:append=\" kernel-image kernel-devicetree htop\"" >> conf/local.conf
+    $ echo "DISTRO=\"ewaol\"" >> conf/local.conf
+    $ echo "DISTRO_FEATURES:append=\" ewaol-baremetal\"" >> conf/local.conf
+    $ echo "INCOMPATIBLE_LICENSE:remove=\"GPL-3.0-only GPL-3.0-or-later\"" >> conf/local.conf
+    $ echo "MACHINE_FEATURES:append=\" docker\"" >> conf/local.conf
+    $ echo "CONTAINERS_CONFIG_FILE_MD5=\"066dad66874710b95ca625e163252f0a\"" >> conf/local.conf
+    $ echo "K3S_CONFIG_FILE_MD5=\"f0925de782533b9cf6969980c257f56a\"" >> conf/local.conf
+    $ echo "PACKAGECONFIG:remove:pn-qemu-system-native=\"gtk+ sdl\"" >> conf/local.conf
+    $ echo "EWAOL_ROOTFS_EXTRA_SPACE=\"2000000\"" >> conf/local.conf
+    $ echo "EWAOL_GENERIC_ARM64_FILESYSTEM=\"0\"" >> conf/local.conf
+    $ echo "DISTRO_FEATURES:append=\" ewaol-test\"" >> conf/local.conf
+```
+
+If you want to include the EWAOL SDK in the build, also run:
+```
+    $ echo "DISTRO_FEATURES:append=\" ewaol-sdk\"" >> conf/local.conf
+```
+
 Build the target file system image using bitbake:
 ```bash
     $ bitbake <image>
 ```
-\<image\>: core-image-minimal
+\<image\>: can be selected from any of the below:
+* core-image-minimal: Minimal Renesas RZ/G BSP
+* ewaol-baremetal-image: EWAOL baremetal distribution image
+* ewaol-baremetal-sdk-image: EWAOL baremetal SDK distribution image
 
 After completing the images for the target machine will be available in the
-output directory _'tmp/deploy/images/\<supported board name\>'_.
+output directory *tmp/deploy/images/\<machine\>*.
 
 Images generated:
 * Image (generic Linux Kernel binary image file)
+* Image.gz (compressed Linux Kernel binary image file)
 * DTB for target machine
-* \<image\>-\<machine\>.tar.bz2 (rootfs tar+bzip2)
-* \<image\>-\<machine\>.ext4  (rootfs ext4 format)
+* \<image\>-\<machine\>.tar.gz (rootfs tar+gz)
+* \<image\>-\<machine\>.ext4 (rootfs ext4 format)
+* \<image\>-\<machine\>.wic.gz (rootfs in wic format)
+Note: For the rootfs packages the kernel and dtb files will be included in the
+*/boot* directory.
 
 ## Build Instructions for SDK
 
@@ -116,30 +197,15 @@ For 64-bit target SDK (aarch64):
 ```
 The SDK can be found in the output directory _'tmp/deploy/sdk'_
 
-    poky-glibc-x86_64-core-image-weston-aarch64-toolchain-x.x.sh
+    poky-glibc-x86_64-<image>-aarch64-toolchain-x.x.sh
 
 Usage of toolchain SDK: Install the SDK to the default: _/opt/poky/x.x_
 For 64-bit target SDK:
 ```bash
-    $ sh poky-glibc-x86_64-core-image-weston-aarch64-toolchain-x.x.sh
+    $ sh poky-glibc-x86_64-<image>-aarch64-toolchain-x.x.sh
 ```
 For 64-bit application use environment script in _/opt/poky/x.x_
 ```bash
     $ source /opt/poky/x.x/environment-setup-aarch64-poky-linux
 ```
 
-## Build configs
-
-It is possible to change some build configs as below:
-### GPLv3
-Choose to not allow, or allow, GPLv3 packages
-
-By default GPLv3 licenses are not allowed. All recipes that have a GPLv3 license
-will be downgraded to older versions that have an alternative license if
-possible (provided by meta-gplv2).
-
-Users can enable the use of GPLv3 packages by removing the below line from the
-local.conf file:
-```
-- INCOMPATIBLE_LICENSE = "GPL-3.0-only GPL-3.0-or-later"
-```

@@ -32,7 +32,9 @@ image: gitlab.renesas.solutions:5050/spl2/continuous-integration/dockerfiles:ubu
     - cd meta-ewaol && git checkout ${EWAOL_REV} && cd -
     - git clone https://git.yoctoproject.org/git/meta-arm
     - cd meta-arm && git checkout ${ARM_REV} && cd -
+# Update to https://github.com/patersonc/meta-renesas.git if using public version
     - git clone git@gitlab.renesas.solutions:spl2/civil-infrastructure-platform/meta-renesas.git
+# Update to patersonc/kirkstone/BSP-3.0.0-update2/ewaol-dev if using public version
     - cd meta-renesas && git checkout ${CI_COMMIT_REF_NAME} && cd -
     - source poky/oe-init-build-env
     - cp ${CI_PROJECT_DIR}/build/${CONF_DIR}/*.conf conf/
